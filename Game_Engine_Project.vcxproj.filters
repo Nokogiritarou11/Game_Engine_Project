@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="Code\Shader\2D.fx">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\skinned_mesh_material_ps.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\skinned_mesh_ps.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\skinned_mesh_vs.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\sprite_batch_ps.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\sprite_batch_vs.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\sprite_ps.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Code\Shader\sprite_vs.hlsl">
+      <Filter>Sources\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Code\Souse_File\Audio_Manager.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\camera.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\DxSystem.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Game_System.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\geometric_primitive.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Input_Manager.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Light.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\main.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Resource_Manager.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\SceneManager.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Shader.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\singleton.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\skinned_mesh.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Sprite.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\static_mesh.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Texture.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\View.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Code\Header_File\Audio_Manager.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\blender.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\camera.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\DxSystem.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Game_System.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\geometric_primitive.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\high_resolution_timer.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Input_Manager.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Light.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\misc.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Original_Math.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Resource_Manager.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Scene.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Shader.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\singleton.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\skinned_mesh.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Sprite.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\static_mesh.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Texture.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\View.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Code\Shader\skinned_mesh.hlsli">
+      <Filter>Sources\Shaders</Filter>
+    </None>
+    <None Include="Code\Shader\sprite.hlsli">
+      <Filter>Sources\Shaders</Filter>
+    </None>
+    <None Include="Code\Shader\sprite_batch.hlsli">
+      <Filter>Sources\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{49362b9b-b25d-4264-9a32-efb91def4971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Headers">
+      <UniqueIdentifier>{41db6cb6-48ef-438b-a0cd-8896b99eab41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Reaources">
+      <UniqueIdentifier>{d24e19ad-27f5-4905-839e-aafa818a5eb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Shaders">
+      <UniqueIdentifier>{e65052c2-8536-4852-868b-3312e5769417}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
