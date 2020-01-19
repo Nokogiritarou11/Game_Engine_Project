@@ -5,8 +5,8 @@
 #include <time.h>
 #include <WinSDKVer.h>
 #include <SDKDDKVer.h>
-#include "DxSystem.h"
-#include "Scene.h"
+#include "Engine.h"
+#include "Time.h"
 #include <sstream>
 
 //float	elapsed_time = 0; // 経過時間
@@ -65,7 +65,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 }
 
-int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 	// ウィンドウ生成
 	TCHAR szWindowClass[] = TEXT("Shader_Sample");
@@ -100,8 +100,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		return 0;
 	}
 
-	SceneManager* scenemanager = new SceneManager();
-	scenemanager->ChangeScene(std::make_unique<SceneTest01>());
+	Engine* engine = new Engine();
 
 	//メインループ
 	MSG hMsg = { 0 };
@@ -117,13 +116,13 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		}
 		else
 		{
-			DxSystem::elapsed_time =
+			Time::deltaTime =
 				(GetTickCount64() - before) * 0.001f;
 
 			before = GetTickCount64();
 			float mspf = 1000.0f / fps;
 
-			Interval -= DxSystem::elapsed_time;
+			Interval -= Time::deltaTime;
 			fps++;
 			if (Interval < 0) {
 				std::ostringstream outs;
@@ -135,17 +134,10 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 
 			}
 
-
-
-
-
-
 			// 更新・描画
-			scenemanager->Update();
-			scenemanager->Render();
+			engine->Update();
 		}
 	}
-	SAFE_DELETE(scenemanager);
-	DxSystem::Release();
+	SAFE_DELETE(engine);
 	return 0;
 }

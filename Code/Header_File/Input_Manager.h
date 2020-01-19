@@ -13,19 +13,19 @@ using namespace std;
 class Input_Manager
 {
 public:
-	Keyboard::State kb;
-	Mouse::State ms;
-	GamePad::State pad;
-	Keyboard::KeyboardStateTracker key_tracker;
-	Mouse::ButtonStateTracker mouse_tracker;
-	GamePad::ButtonStateTracker pad_tracker;
-	unique_ptr<Mouse> mouse;
-	unique_ptr<GamePad> gamepad;
-	unique_ptr<Keyboard> keyboard;
+	static Keyboard::State kb;
+	static Mouse::State ms;
+	static GamePad::State pad;
+	static Keyboard::KeyboardStateTracker key_tracker;
+	static Mouse::ButtonStateTracker mouse_tracker;
+	static GamePad::ButtonStateTracker pad_tracker;
+	static unique_ptr<Mouse> mouse;
+	static unique_ptr<GamePad> gamepad;
+	static unique_ptr<Keyboard> keyboard;
 
 	Input_Manager();
 	//~Input_Manager();
 
-	void Update();
+	static void Update();
 private:
 };

@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\DirectXTK-master\Inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Code\Header_File;.\DirectXTK-master\Inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -155,39 +155,49 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Code\Souse_File\Audio_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Behaviour.cpp" />
     <ClCompile Include="Code\Souse_File\camera.cpp" />
+    <ClCompile Include="Code\Souse_File\Component.cpp" />
     <ClCompile Include="Code\Souse_File\DxSystem.cpp" />
-    <ClCompile Include="Code\Souse_File\Game_System.cpp" />
-    <ClCompile Include="Code\Souse_File\geometric_primitive.cpp" />
+    <ClCompile Include="Code\Souse_File\Engine.cpp" />
+    <ClCompile Include="Code\Souse_File\GameObject.cpp" />
+    <ClCompile Include="Code\Souse_File\GameObject_Manager.cpp" />
     <ClCompile Include="Code\Souse_File\Input_Manager.cpp" />
-    <ClCompile Include="Code\Souse_File\Light.cpp" />
     <ClCompile Include="Code\Souse_File\main.cpp" />
+    <ClCompile Include="Code\Souse_File\Material.cpp" />
+    <ClCompile Include="Code\Souse_File\MonoBehaviour.cpp" />
+    <ClCompile Include="Code\Souse_File\MonoBehaviour_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Object.cpp" />
     <ClCompile Include="Code\Souse_File\Resource_Manager.cpp" />
-    <ClCompile Include="Code\Souse_File\SceneManager.cpp" />
+    <ClCompile Include="Code\Souse_File\Scene.cpp" />
+    <ClCompile Include="Code\Souse_File\Scene_Manager.cpp" />
     <ClCompile Include="Code\Souse_File\Shader.cpp" />
-    <ClCompile Include="Code\Souse_File\singleton.cpp" />
     <ClCompile Include="Code\Souse_File\skinned_mesh.cpp" />
     <ClCompile Include="Code\Souse_File\Sprite.cpp" />
     <ClCompile Include="Code\Souse_File\static_mesh.cpp" />
     <ClCompile Include="Code\Souse_File\Texture.cpp" />
-    <ClCompile Include="Code\Souse_File\View.cpp" />
+    <ClCompile Include="Code\Souse_File\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h" />
-    <ClInclude Include="Code\Header_File\blender.h" />
+    <ClInclude Include="Code\Header_File\Behaviour.h" />
     <ClInclude Include="Code\Header_File\camera.h" />
+    <ClInclude Include="Code\Header_File\Component.h" />
     <ClInclude Include="Code\Header_File\DxSystem.h" />
-    <ClInclude Include="Code\Header_File\Game_System.h" />
-    <ClInclude Include="Code\Header_File\geometric_primitive.h" />
-    <ClInclude Include="Code\Header_File\high_resolution_timer.h" />
+    <ClInclude Include="Code\Header_File\Engine.h" />
+    <ClInclude Include="Code\Header_File\GameObject.h" />
+    <ClInclude Include="Code\Header_File\GameObject_Manager.h" />
     <ClInclude Include="Code\Header_File\Input_Manager.h" />
-    <ClInclude Include="Code\Header_File\Light.h" />
+    <ClInclude Include="Code\Header_File\Material.h" />
     <ClInclude Include="Code\Header_File\misc.h" />
+    <ClInclude Include="Code\Header_File\MonoBehaviour.h" />
+    <ClInclude Include="Code\Header_File\MonoBehaviour_Manager.h" />
+    <ClInclude Include="Code\Header_File\Object.h" />
     <ClInclude Include="Code\Header_File\Original_Math.h" />
     <ClInclude Include="Code\Header_File\Resource_Manager.h" />
     <ClInclude Include="Code\Header_File\Scene.h" />
+    <ClInclude Include="Code\Header_File\Scene_Manager.h" />
     <ClInclude Include="Code\Header_File\Shader.h" />
-    <ClInclude Include="Code\Header_File\singleton.h" />
     <ClInclude Include="Code\Header_File\skinned_mesh.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
@@ -195,7 +205,8 @@
     <ClInclude Include="Code\Header_File\Sprite.h" />
     <ClInclude Include="Code\Header_File\static_mesh.h" />
     <ClInclude Include="Code\Header_File\Texture.h" />
-    <ClInclude Include="Code\Header_File\View.h" />
+    <ClInclude Include="Code\Header_File\Time.h" />
+    <ClInclude Include="Code\Header_File\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\Shader\skinned_mesh.hlsli" />

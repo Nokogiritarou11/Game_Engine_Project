@@ -36,16 +36,7 @@
     <ClCompile Include="Code\Souse_File\DxSystem.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\Game_System.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Souse_File\geometric_primitive.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\Input_Manager.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Souse_File\Light.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
     <ClCompile Include="Code\Souse_File\main.cpp">
@@ -54,13 +45,7 @@
     <ClCompile Include="Code\Souse_File\Resource_Manager.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\SceneManager.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\Shader.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Souse_File\singleton.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
     <ClCompile Include="Code\Souse_File\skinned_mesh.cpp">
@@ -75,15 +60,23 @@
     <ClCompile Include="Code\Souse_File\Texture.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\View.cpp">
+    <ClCompile Include="Code\Souse_File\Object.cpp" />
+    <ClCompile Include="Code\Souse_File\GameObject.cpp" />
+    <ClCompile Include="Code\Souse_File\Component.cpp" />
+    <ClCompile Include="Code\Souse_File\Behaviour.cpp" />
+    <ClCompile Include="Code\Souse_File\MonoBehaviour.cpp" />
+    <ClCompile Include="Code\Souse_File\Transform.cpp" />
+    <ClCompile Include="Code\Souse_File\Material.cpp" />
+    <ClCompile Include="Code\Souse_File\Scene_Manager.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
+    <ClCompile Include="Code\Souse_File\GameObject_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\MonoBehaviour_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Scene.cpp" />
+    <ClCompile Include="Code\Souse_File\Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\blender.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\camera.h">
@@ -92,19 +85,7 @@
     <ClInclude Include="Code\Header_File\DxSystem.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\Game_System.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\geometric_primitive.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\high_resolution_timer.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Code\Header_File\Input_Manager.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\Light.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\misc.h">
@@ -122,9 +103,6 @@
     <ClInclude Include="Code\Header_File\Shader.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\singleton.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Code\Header_File\skinned_mesh.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
@@ -137,9 +115,18 @@
     <ClInclude Include="Code\Header_File\Texture.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\View.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
+    <ClInclude Include="Code\Header_File\Object.h" />
+    <ClInclude Include="Code\Header_File\GameObject.h" />
+    <ClInclude Include="Code\Header_File\Component.h" />
+    <ClInclude Include="Code\Header_File\Behaviour.h" />
+    <ClInclude Include="Code\Header_File\MonoBehaviour.h" />
+    <ClInclude Include="Code\Header_File\Transform.h" />
+    <ClInclude Include="Code\Header_File\Material.h" />
+    <ClInclude Include="Code\Header_File\GameObject_Manager.h" />
+    <ClInclude Include="Code\Header_File\Scene_Manager.h" />
+    <ClInclude Include="Code\Header_File\MonoBehaviour_Manager.h" />
+    <ClInclude Include="Code\Header_File\Engine.h" />
+    <ClInclude Include="Code\Header_File\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\Shader\skinned_mesh.hlsli">
