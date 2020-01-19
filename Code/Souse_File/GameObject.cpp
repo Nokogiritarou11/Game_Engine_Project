@@ -35,10 +35,10 @@ void GameObject::SetActive(bool value)
 
 weak_ptr<GameObject> GameObject::Find(string Name)
 {
-    GameObject_Manager::Find(Name);
+    return GameObject_Manager::Find(Name);
 }
 
 weak_ptr<GameObject> GameObject::FindWithTag(string Tag)
 {
-    GameObject_Manager::FindWithTag(Tag);
+    return GameObject_Manager::FindWithTag(Tag);
 }

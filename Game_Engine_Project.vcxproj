@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>.\DirectXTK-master\Bin\Desktop_2019\Win32\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -123,15 +123,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\DirectXTK-master\Inc;.\FBX SDK\2019.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\DirectXTK-master\Inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\DirectXTK-master\Bin\Desktop_2019\Win32\Release;.\FBX SDK\2019.2\lib\vs2017\x86\release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DirectXTK.lib;d3d11.lib;dxgi.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\DirectXTK-master\Bin\Desktop_2019\Win32\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;d3d11.lib;dxgi.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -168,14 +168,27 @@
     <ClCompile Include="Code\Souse_File\MonoBehaviour.cpp" />
     <ClCompile Include="Code\Souse_File\MonoBehaviour_Manager.cpp" />
     <ClCompile Include="Code\Souse_File\Object.cpp" />
-    <ClCompile Include="Code\Souse_File\Resource_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Resource_Manager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Code\Souse_File\Scene.cpp" />
     <ClCompile Include="Code\Souse_File\Scene_Manager.cpp" />
-    <ClCompile Include="Code\Souse_File\Shader.cpp" />
-    <ClCompile Include="Code\Souse_File\skinned_mesh.cpp" />
-    <ClCompile Include="Code\Souse_File\Sprite.cpp" />
-    <ClCompile Include="Code\Souse_File\static_mesh.cpp" />
-    <ClCompile Include="Code\Souse_File\Texture.cpp" />
+    <ClCompile Include="Code\Souse_File\Shader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\skinned_mesh.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Sprite.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\static_mesh.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Texture.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Time.cpp" />
     <ClCompile Include="Code\Souse_File\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,17 +207,26 @@
     <ClInclude Include="Code\Header_File\MonoBehaviour_Manager.h" />
     <ClInclude Include="Code\Header_File\Object.h" />
     <ClInclude Include="Code\Header_File\Original_Math.h" />
-    <ClInclude Include="Code\Header_File\Resource_Manager.h" />
+    <ClInclude Include="Code\Header_File\Resource_Manager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Code\Header_File\Scene.h" />
     <ClInclude Include="Code\Header_File\Scene_Manager.h" />
-    <ClInclude Include="Code\Header_File\Shader.h" />
-    <ClInclude Include="Code\Header_File\skinned_mesh.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
+    <ClInclude Include="Code\Header_File\Shader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\Sprite.h" />
-    <ClInclude Include="Code\Header_File\static_mesh.h" />
-    <ClInclude Include="Code\Header_File\Texture.h" />
+    <ClInclude Include="Code\Header_File\skinned_mesh.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Sprite.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\static_mesh.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\Texture.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Code\Header_File\Time.h" />
     <ClInclude Include="Code\Header_File\Transform.h" />
   </ItemGroup>
@@ -219,6 +241,7 @@
   <ItemGroup>
     <FxCompile Include="Code\Shader\2D.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Code\Shader\skinned_mesh_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

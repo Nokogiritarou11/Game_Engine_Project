@@ -27,8 +27,8 @@ Transform::~Transform()
 void Transform::Initialize(shared_ptr<GameObject> obj)
 {
 	gameObject = obj;
-	obj->transform = dynamic_pointer_cast<Transform>(shared_from_this());
-	transform = dynamic_pointer_cast<Transform>(shared_from_this());
+	obj->transform = static_pointer_cast<Transform>(shared_from_this());
+	transform = static_pointer_cast<Transform>(shared_from_this());
 }
 
 void Transform::Update()

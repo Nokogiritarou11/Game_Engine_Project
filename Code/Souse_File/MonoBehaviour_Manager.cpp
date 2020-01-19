@@ -2,6 +2,10 @@
 #include "GameObject.h"
 using namespace std;
 
+list<weak_ptr<MonoBehaviour>> MonoBehaviour_Manager::MonoBehaviour_Update_list;
+list<weak_ptr<MonoBehaviour>> MonoBehaviour_Manager::MonoBehaviour_Awake_list;
+list<weak_ptr<MonoBehaviour>> MonoBehaviour_Manager::MonoBehaviour_Start_list;
+
 MonoBehaviour_Manager::MonoBehaviour_Manager()
 {
 }
@@ -26,7 +30,7 @@ void MonoBehaviour_Manager::Update()
 			continue;
 		}
 		shared_ptr<MonoBehaviour> mono = itr->lock();
-		if (mono->gameObject->activeSelf)
+		if (mono->gameObject->activeSelf())
 		{
 			if (mono->enabled)
 			{

@@ -2,7 +2,7 @@
 
 Engine::Engine()
 {
-
+	Input_Manager::Initialize();
 }
 
 Engine::~Engine()
@@ -14,4 +14,6 @@ void Engine::Update()
 {
 	Input_Manager::Update();
 	Scene_Manager::Update();
+	DxSystem::Clear();
+	DxSystem::Flip(1);
 }

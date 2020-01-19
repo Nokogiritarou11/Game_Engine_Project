@@ -14,5 +14,5 @@ MonoBehaviour::~MonoBehaviour()
 void MonoBehaviour::Initialize(shared_ptr<GameObject> obj)
 {
 	transform = obj->transform;
-	MonoBehaviour_Manager::Add(dynamic_pointer_cast<MonoBehaviour>(shared_from_this()));
+	MonoBehaviour_Manager::Add(static_pointer_cast<MonoBehaviour>(shared_from_this()));
 }

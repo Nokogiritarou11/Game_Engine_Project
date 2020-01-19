@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <memory>
+#include "GameObject.h"
 
 class Scene
 {

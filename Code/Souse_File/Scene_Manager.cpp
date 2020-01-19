@@ -7,6 +7,12 @@ using namespace std;
 //
 //**********************************************
 
+
+std::weak_ptr<Scene> Scene_Manager::Active_Scene;
+std::list<Scene_Manager::Scene_Data> Scene_Manager::Scene_List;
+bool Scene_Manager::Load;
+std::string Scene_Manager::Next_Scene_Name;
+
 Scene_Manager::Scene_Manager()
 {
 }

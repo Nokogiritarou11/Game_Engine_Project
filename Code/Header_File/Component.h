@@ -21,7 +21,7 @@ public:
 	bool CompareTag(std::string _tag);
 
 	virtual void Initialize() {};
-	virtual void Initialize(shared_ptr<GameObject> obj) {};
+	virtual void Initialize(std::shared_ptr<GameObject> obj) {};
 	template<class T>
 	std::shared_ptr<T> GetComponent();
 	template<class T>
@@ -35,7 +35,7 @@ template<class T>
 std::shared_ptr<T> Component::GetComponent()
 {
 	for (std::shared_ptr<Component> com : gameObject->Component_List) {
-		std::shared_ptr<T> buff = std::dynamic_pointer_cast<T>(com);
+		std::shared_ptr<T> buff = std::static_pointer_cast<T>(com);
 		if (buff != nullptr)
 			return buff;
 	}

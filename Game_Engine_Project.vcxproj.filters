@@ -74,6 +74,7 @@
     <ClCompile Include="Code\Souse_File\MonoBehaviour_Manager.cpp" />
     <ClCompile Include="Code\Souse_File\Scene.cpp" />
     <ClCompile Include="Code\Souse_File\Engine.cpp" />
+    <ClCompile Include="Code\Souse_File\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">

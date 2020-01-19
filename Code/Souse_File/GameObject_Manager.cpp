@@ -4,6 +4,9 @@
 #include "Transform.h"
 using namespace std;
 
+std::list<std::weak_ptr<GameObject>> GameObject_Manager::gameObject_List;
+unsigned long GameObject_Manager::ID_Count;
+
 GameObject_Manager::GameObject_Manager()
 {
 	ID_Count = 0;

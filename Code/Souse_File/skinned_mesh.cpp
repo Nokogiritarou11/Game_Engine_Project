@@ -3,6 +3,7 @@
 #include <vector>
 #include <functional>
 #include "misc.h"
+#include "camera.h"
 
 skinned_mesh::skinned_mesh()
 {

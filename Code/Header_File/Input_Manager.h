@@ -23,8 +23,10 @@ public:
 	static unique_ptr<GamePad> gamepad;
 	static unique_ptr<Keyboard> keyboard;
 
-	Input_Manager();
+	//Input_Manager();
 	//~Input_Manager();
+
+	static void Initialize();
 
 	static void Update();
 private:

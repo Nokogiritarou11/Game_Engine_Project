@@ -40,7 +40,7 @@ template<class T>
 std::shared_ptr<T> GameObject::GetComponent()
 {
 	for (std::shared_ptr<Component> com : Component_List) {
-		std::shared_ptr<T> buff = std::dynamic_pointer_cast<T>(com);
+		std::shared_ptr<T> buff = std::static_pointer_cast<T>(com);
 		if (buff != nullptr)
 			return buff;
 	}
@@ -52,6 +52,6 @@ std::shared_ptr<T> GameObject::AddComponent()
 {
 	std::shared_ptr<T> buff = std::make_shared<T>();
 	Component_List.push_back(buff);
-	buff->Initialize(std::dynamic_pointer_cast<GameObject>(shared_from_this()));
+	buff->Initialize(std::static_pointer_cast<GameObject>(shared_from_this()));
 	return buff;
 }

@@ -19,7 +19,7 @@ public:
 	virtual void OnDisable() {};
 	virtual void OnDestroy() {};
 
-	void Initialize(shared_ptr<GameObject> obj);
+	void Initialize(std::shared_ptr<GameObject> obj);
 private:
 
 };
