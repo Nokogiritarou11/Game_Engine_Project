@@ -1,4 +1,6 @@
 #pragma once
+#include <InitGUID.h>
+#include <dxgidebug.h>
 #include <d3d11.h>
 #include <memory>
 #include <wrl.h>
@@ -24,6 +26,7 @@ private:
 	static ComPtr<ID3D11ShaderResourceView>	ShaderResourceView;
 	static ComPtr<ID3D11DepthStencilState>	DepthStencilState[2];
 
+	static ComPtr<IDXGIDebug>               DXGIDebug;
 
 	static HRESULT CreateDevice(HWND hWnd);
 	static bool CreateDepthStencil();

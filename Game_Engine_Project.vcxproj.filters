@@ -30,9 +30,6 @@
     <ClCompile Include="Code\Souse_File\Audio_Manager.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\camera.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\DxSystem.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
@@ -75,12 +72,14 @@
     <ClCompile Include="Code\Souse_File\Scene.cpp" />
     <ClCompile Include="Code\Souse_File\Engine.cpp" />
     <ClCompile Include="Code\Souse_File\Time.cpp" />
+    <ClCompile Include="Code\Souse_File\Renderer.cpp" />
+    <ClCompile Include="Code\Souse_File\Camera_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Camera.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\camera.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\DxSystem.h">
@@ -128,6 +127,11 @@
     <ClInclude Include="Code\Header_File\MonoBehaviour_Manager.h" />
     <ClInclude Include="Code\Header_File\Engine.h" />
     <ClInclude Include="Code\Header_File\Time.h" />
+    <ClInclude Include="Code\Header_File\Renderer.h" />
+    <ClInclude Include="Code\Header_File\Camera_Manager.h" />
+    <ClInclude Include="Code\Header_File\Camera.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\Shader\skinned_mesh.hlsli">

@@ -4,6 +4,7 @@
 #include <functional>
 #include "misc.h"
 #include "camera.h"
+#include "Time.h"
 
 skinned_mesh::skinned_mesh()
 {
@@ -163,7 +164,7 @@ void skinned_mesh::render()
 				{
 					XMStoreFloat4x4(&data.bone_transforms[i], XMLoadFloat4x4(&skeletal.at(i).transform));
 				}
-				mesh.skeletal_animation[anim_index].animation_tick += elapsed_time;
+				mesh.skeletal_animation[anim_index].animation_tick += Time::deltaTime;
 			}
 
 			DxSystem::DeviceContext->VSSetConstantBuffers(0, 1, g_pConstantBuffer.GetAddressOf());

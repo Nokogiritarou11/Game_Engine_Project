@@ -1,5 +1,11 @@
 #include "DxSystem.h"
 #include "Shader.h"
+#include <locale.h>
+using namespace DirectX;
+using namespace std;
+
+unordered_map<WCHAR, Shader::set_of_vertex_shader_and_input_layout> Shader::vertex_cache;
+unordered_map<WCHAR, ID3D11PixelShader*> Shader::pixel_cache;
 
 Shader::~Shader()
 {
@@ -45,58 +51,78 @@ HRESULT Shader::Compile(WCHAR* filename, LPCSTR method, LPCSTR shaderModel, ID3D
 //------------------------------------------------
 //	シェーダーセットコンパイル
 //------------------------------------------------
-bool Shader::Create(WCHAR* filename, LPCSTR VSFunc, LPCSTR PSFunc )
+bool Shader::Create(WCHAR* filename, LPCSTR VSFunc, LPCSTR PSFunc)
 {
 	HRESULT hr = S_OK;
 
 	ComPtr<ID3DBlob> VSBlob = NULL;
 	// 頂点シェーダ
-	hr = Compile(filename, VSFunc, "vs_5_0", VSBlob.GetAddressOf());
-	assert(SUCCEEDED(hr));
 
-
-	// 頂点シェーダ生成
-	hr = DxSystem::Device->CreateVertexShader(VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), NULL, VS.GetAddressOf());
-	assert(SUCCEEDED(hr));
-
-	// 入力レイアウト
-	D3D11_INPUT_ELEMENT_DESC layout[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "WEIGHTS", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT,D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{ "BONES", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-	};
-	UINT numElements = ARRAYSIZE(layout);
-
-	// 入力レイアウト生成
-	hr = DxSystem::Device->CreateInputLayout(
-		layout,
-		numElements,
-		VSBlob->GetBufferPointer(),
-		VSBlob->GetBufferSize(),
-		VertexLayout.GetAddressOf()
-	);
-	assert(SUCCEEDED(hr));
-
-
-	// 入力レイアウト設定
-	DxSystem::DeviceContext->IASetInputLayout(VertexLayout.Get());
-
-
-	// ピクセルシェーダ
-	ComPtr<ID3DBlob> PSBlob = NULL;
-	hr = Compile(filename, PSFunc, "ps_5_0", &PSBlob);
-	if (FAILED(hr))
+	auto it = vertex_cache.find(*filename);
+	if (it != vertex_cache.end())
 	{
-		return false;
+		VS = it->second.vertex_shader;
+		VertexLayout = it->second.input_layout;
+	}
+	else
+	{
+		hr = Compile(filename, VSFunc, "vs_5_0", VSBlob.GetAddressOf());
+		assert(SUCCEEDED(hr));
+
+
+		// 頂点シェーダ生成
+		hr = DxSystem::Device->CreateVertexShader(VSBlob->GetBufferPointer(), VSBlob->GetBufferSize(), NULL, VS.GetAddressOf());
+		assert(SUCCEEDED(hr));
+
+		// 入力レイアウト
+		D3D11_INPUT_ELEMENT_DESC layout[] = {
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "WEIGHTS", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT,D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{ "BONES", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		};
+		UINT numElements = ARRAYSIZE(layout);
+
+		// 入力レイアウト生成
+		hr = DxSystem::Device->CreateInputLayout(
+			layout,
+			numElements,
+			VSBlob->GetBufferPointer(),
+			VSBlob->GetBufferSize(),
+			VertexLayout.GetAddressOf()
+		);
+		assert(SUCCEEDED(hr));
+
+		vertex_cache.insert(make_pair(*filename, set_of_vertex_shader_and_input_layout(VS.Get(), VertexLayout.Get())));
+
+		// 入力レイアウト設定
+		DxSystem::DeviceContext->IASetInputLayout(VertexLayout.Get());
 	}
 
-	// ピクセルシェーダ生成
-	hr = DxSystem::Device->CreatePixelShader( PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), NULL, PS.GetAddressOf());
-	//PSBlob->Release();
-	assert(SUCCEEDED(hr));
+	// ピクセルシェーダ
+	auto itr = pixel_cache.find(*filename);
+	if (itr != pixel_cache.end())
+	{
+		PS = itr->second;
+		VertexLayout = it->second.input_layout;
+	}
+	else
+	{
+		ComPtr<ID3DBlob> PSBlob = NULL;
+		hr = Compile(filename, PSFunc, "ps_5_0", &PSBlob);
+		if (FAILED(hr))
+		{
+			return false;
+		}
+		pixel_cache.insert(make_pair(*filename, PS.Get()));
+		// ピクセルシェーダ生成
+		hr = DxSystem::Device->CreatePixelShader(PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), NULL, PS.GetAddressOf());
+		//PSBlob->Release();
+		assert(SUCCEEDED(hr));
+	}
+
 
 	return true;
 }

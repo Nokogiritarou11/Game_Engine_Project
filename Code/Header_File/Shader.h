@@ -1,9 +1,10 @@
 #pragma once
-
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
-using namespace DirectX;
+#include <unordered_map>
+#include <wrl.h>
+using Microsoft::WRL::ComPtr;
 
 class Shader
 {
@@ -14,14 +15,18 @@ protected:
 	ComPtr<ID3D11HullShader>		HS = nullptr; //　ハルシェーダ
 	ComPtr<ID3D11DomainShader>		DS = nullptr;//　ドメインネームシェーダ
 
-
-
-
-
 	ComPtr<ID3D11InputLayout>		VertexLayout;
 
 	HRESULT Compile(WCHAR* filename, LPCSTR method, LPCSTR shaderModel, ID3DBlob** ppBlobOut);
-	
+
+	struct set_of_vertex_shader_and_input_layout
+	{
+		set_of_vertex_shader_and_input_layout(ID3D11VertexShader* vertex_shader, ID3D11InputLayout* input_layout) : vertex_shader(vertex_shader), input_layout(input_layout) {}
+		ID3D11VertexShader* vertex_shader;
+		ID3D11InputLayout* input_layout;
+	};
+	static std::unordered_map<WCHAR, set_of_vertex_shader_and_input_layout> vertex_cache;
+	static std::unordered_map<WCHAR, ID3D11PixelShader*> pixel_cache;
 
 public:
 	Shader() { /*ZeroMemory(this, sizeof(Shader));*/ }
@@ -43,8 +48,8 @@ public:
 
 struct VERTEX
 {
-	XMFLOAT3 Pos;	//位置
-	XMFLOAT3 Normal;//法線
-	XMFLOAT2 Tex;	//UV座標
-	XMFLOAT4 Color;	//頂点色
+	DirectX::XMFLOAT3 Pos;	//位置
+	DirectX::XMFLOAT3 Normal;//法線
+	DirectX::XMFLOAT2 Tex;	//UV座標
+	DirectX::XMFLOAT4 Color;	//頂点色
 };

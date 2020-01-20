@@ -17,8 +17,17 @@ public:
 	DirectX::XMFLOAT3 localScale = { 0, 0, 0 };
 	DirectX::XMFLOAT3 localEulerAngles = { 0, 0, 0 };
 
+	DirectX::XMFLOAT4 DefaultForward = { 0.0f, 0.0f, 1.0f, 0.0f };
+	DirectX::XMFLOAT4 DefaultRight = { 1.0f, 0.0f, 0.0f, 0.0f };
+	DirectX::XMFLOAT4 DefaultUp = { 0.0f, 1.0f, 0.0f, 0.0f };
+	DirectX::XMFLOAT4 forward = { 0.0f, 0.0f, 1.0f, 0.0f };
+	DirectX::XMFLOAT4 right = { 1.0f, 0.0f, 0.0f, 0.0f };
+	DirectX::XMFLOAT4 up = { 1.0f, 0.0f, 0.0f, 0.0f };
 
 	DirectX::XMFLOAT4X4 world = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	DirectX::XMFLOAT4X4 scale_matrix = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	DirectX::XMFLOAT4X4 rotation_matrix = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	DirectX::XMFLOAT4X4 translation_matrix = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
 	std::weak_ptr<Transform> parent;
 

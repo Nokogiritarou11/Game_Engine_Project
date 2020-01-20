@@ -17,6 +17,7 @@ ComPtr<ID3D11DepthStencilState>		DxSystem::DepthStencilState[2];
 ComPtr<ID3D11RasterizerState>		DxSystem::RasterizerState[RASTERIZE_TYPE];
 ComPtr<ID3D11BlendState>			DxSystem::BlendState[BLEND_TYPE];
 
+ComPtr<IDXGIDebug>                  DxSystem::DXGIDebug;
 
 int DxSystem::ScreenWidth = 1280;
 int DxSystem::ScreenHeight = 720;
@@ -45,13 +46,17 @@ bool DxSystem::Initialize(HWND hWnd, int width, int height)
 HRESULT DxSystem::CreateDevice(HWND hWnd)
 {
 	HRESULT hr = S_OK;
-
+	UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+#if defined(_DEBUG)
+	// デバッグレイヤーの設定
+	creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
 	//デバイスの生成
 	hr = D3D11CreateDevice(
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		0,
+		creationFlags,
 		NULL,
 		0,
 		D3D11_SDK_VERSION,
@@ -62,6 +67,25 @@ HRESULT DxSystem::CreateDevice(HWND hWnd)
 		MessageBoxW(hWnd, L"D3D11CreateDevice", L"Err", MB_ICONSTOP);
 		return S_FALSE;
 	}
+
+
+#if defined(_DEBUG)
+	//デバッグモード開始
+	if (DXGIDebug == nullptr)
+	{
+		// 作成
+		typedef HRESULT(__stdcall* fPtr)(const IID&, void**);
+		HMODULE hDll = GetModuleHandleW(L"dxgidebug.dll");
+		fPtr DXGIGetDebugInterface = (fPtr)GetProcAddress(hDll, "DXGIGetDebugInterface");
+
+		DXGIGetDebugInterface(__uuidof(IDXGIDebug), (void**)&DXGIDebug);
+
+		// 出力
+		DXGIDebug->ReportLiveObjects(DXGI_DEBUG_D3D11, DXGI_DEBUG_RLO_DETAIL);
+	}
+	else
+		DXGIDebug->ReportLiveObjects(DXGI_DEBUG_D3D11, DXGI_DEBUG_RLO_DETAIL);
+#endif
 
 	//インターフェース取得
 	IDXGIDevice1* hpDXGI = NULL;
@@ -113,6 +137,7 @@ HRESULT DxSystem::CreateDevice(HWND hWnd)
 
 void DxSystem::Release()
 {
+
 }
 
 //****************************************************************
@@ -262,10 +287,10 @@ bool DxSystem::CreateDepthStencil()
 
 	return true;
 }
+
 //------------------------------------------------
 //	ラスタライザステートの生成
 //------------------------------------------------
-
 bool DxSystem::CreateRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rd;

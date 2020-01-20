@@ -14,6 +14,8 @@ void Engine::Update()
 {
 	Input_Manager::Update();
 	Scene_Manager::Update();
+	Camera_Manager::Update();
 	DxSystem::Clear();
+
 	DxSystem::Flip(1);
 }
