@@ -4,6 +4,7 @@
 #include <d3d11.h>
 #include <memory>
 #include <wrl.h>
+#include <DirectXMath.h>
 #include "Input_Manager.h"
 using Microsoft::WRL::ComPtr;
 
@@ -46,6 +47,7 @@ public:
 	static ComPtr<ID3D11Device>			Device;
 	static ComPtr<ID3D11DeviceContext>	DeviceContext;
 
+	static DirectX::XMFLOAT4 Light_Direction;
 	static float elapsed_time;
 
 	static bool Initialize(HWND hWnd, int width, int height);

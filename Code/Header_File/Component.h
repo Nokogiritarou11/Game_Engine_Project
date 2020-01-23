@@ -47,6 +47,6 @@ std::shared_ptr<T> Component::AddComponent()
 {
 	std::shared_ptr<T> buff = std::make_shared<T>();
 	gameObject->Component_List.emplace_back(buff);
-	buff->Initialize(p);
+	buff->Initialize(gameObject);
 	return buff;
 }

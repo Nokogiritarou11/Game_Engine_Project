@@ -7,9 +7,11 @@
 #include <vector>
 #include <stdio.h>
 #include <locale.h>
+#include "DxSystem.h"
 #include "Component.h"
 #include "Texture.h"
 #include "Material.h"
+#include "Camera.h"
 
 class Renderer : public Component
 {
@@ -18,7 +20,9 @@ public:
 	~Renderer();
 
 	bool enabled;
-	Material material;
+	std::vector<std::shared_ptr<Material>> material;
+
+	virtual void Render(std::shared_ptr<Camera> Render_Camera) {};
 
 private:
 

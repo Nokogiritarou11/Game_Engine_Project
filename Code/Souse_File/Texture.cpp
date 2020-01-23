@@ -1,7 +1,7 @@
 #include "DxSystem.h"
 #include "WICTextureLoader.h"
 #include "Texture.h"
-#include "Resource_Manager.h"
+using namespace std;
 
 
 Texture::Texture()
@@ -19,13 +19,36 @@ bool Texture::Load(const wchar_t* filename)
 {
 	HRESULT hr = S_OK;
 
+
 	//	シェーダーリソースビュー作成
-	hr = load_texture_from_file(filename, ShaderResourceView.GetAddressOf(), &texture2d_desc);
-	if (FAILED(hr))
+	ComPtr<ID3D11Resource>resource;
+
+	static unordered_map<wstring, ComPtr<ID3D11ShaderResourceView>> cache;
+	static unordered_map<wstring, ComPtr<ID3D11ShaderResourceView>> cache;
+	auto it = cache.find(filename);
+	if (it != cache.end())
 	{
-		assert(SUCCEEDED(hr));
-		return false;
+		//it->second.Attach(*shader_resource_view);
+		ShaderResourceView = it->second.Get();
+		ShaderResourceView->AddRef();
+		ShaderResourceView->GetResource(resource.GetAddressOf());
 	}
+	else
+	{
+		hr = DirectX::CreateWICTextureFromFile(DxSystem::Device.Get(),
+			filename, resource.GetAddressOf(), ShaderResourceView.GetAddressOf());
+		if (FAILED(hr))
+		{
+			assert(SUCCEEDED(hr));
+			return false;
+		}
+		cache.insert(make_pair(filename, ShaderResourceView));
+	}
+
+	//テクスチャ情報取得
+	ComPtr<ID3D11Texture2D> texture2D;
+	resource.Get()->QueryInterface(texture2D.GetAddressOf());
+	texture2D.Get()->GetDesc(&texture2d_desc);
 
 	//	サンプラステート作成
 	D3D11_SAMPLER_DESC sd = {};

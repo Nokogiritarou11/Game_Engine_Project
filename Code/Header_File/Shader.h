@@ -15,7 +15,6 @@ protected:
 	ComPtr<ID3D11HullShader>		HS = nullptr; //　ハルシェーダ
 	ComPtr<ID3D11DomainShader>		DS = nullptr;//　ドメインネームシェーダ
 
-	ComPtr<ID3D11InputLayout>		VertexLayout;
 
 	HRESULT Compile(WCHAR* filename, LPCSTR method, LPCSTR shaderModel, ID3DBlob** ppBlobOut);
 
@@ -25,10 +24,13 @@ protected:
 		ID3D11VertexShader* vertex_shader;
 		ID3D11InputLayout* input_layout;
 	};
+
 	static std::unordered_map<WCHAR, set_of_vertex_shader_and_input_layout> vertex_cache;
 	static std::unordered_map<WCHAR, ID3D11PixelShader*> pixel_cache;
-
 public:
+
+	ComPtr<ID3D11InputLayout>		VertexLayout;
+
 	Shader() { /*ZeroMemory(this, sizeof(Shader));*/ }
 	virtual ~Shader();
 

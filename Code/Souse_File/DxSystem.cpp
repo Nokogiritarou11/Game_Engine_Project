@@ -1,4 +1,5 @@
 #include "DxSystem.h"
+using namespace DirectX;
 //#include <crtdbg.h>
 
 #pragma comment( lib, "d3d11.lib" )
@@ -21,7 +22,7 @@ ComPtr<IDXGIDebug>                  DxSystem::DXGIDebug;
 
 int DxSystem::ScreenWidth = 1280;
 int DxSystem::ScreenHeight = 720;
-
+XMFLOAT4 DxSystem::Light_Direction = { 0.0f, 1.0f, 0.0f, 0 };
 float DxSystem::elapsed_time = 0;
 
 //****************************************************************

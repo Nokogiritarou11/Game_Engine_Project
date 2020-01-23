@@ -31,6 +31,14 @@ public:
 
 	std::weak_ptr<Transform> parent;
 
+	// convert coordinate system from 'UP:+Z FRONT:+Y RIGHT-HAND' to 'UP:+Y FRONT:+Z LEFT-HAND'
+	DirectX::XMFLOAT4X4 coordinate_conversion = {
+	1, 0, 0, 0,
+	0, 0, 1, 0,
+	0, 1, 0, 0,
+	0, 0, 0, 1
+	};
+
 	Transform();
 	Transform(DirectX::XMFLOAT3 _position, DirectX::XMFLOAT4 _rotation);
 	Transform(DirectX::XMFLOAT3 _position, DirectX::XMFLOAT3 _euler);
@@ -42,11 +50,4 @@ public:
 
 private:
 
-	// convert coordinate system from 'UP:+Z FRONT:+Y RIGHT-HAND' to 'UP:+Y FRONT:+Z LEFT-HAND'
-	DirectX::XMFLOAT4X4 coordinate_conversion = {
-	1, 0, 0, 0,
-	0, 0, 1, 0,
-	0, 1, 0, 0,
-	0, 0, 0, 1
-	};
 };
