@@ -24,7 +24,6 @@ bool Texture::Load(const wchar_t* filename)
 	ComPtr<ID3D11Resource>resource;
 
 	static unordered_map<wstring, ComPtr<ID3D11ShaderResourceView>> cache;
-	static unordered_map<wstring, ComPtr<ID3D11ShaderResourceView>> cache;
 	auto it = cache.find(filename);
 	if (it != cache.end())
 	{

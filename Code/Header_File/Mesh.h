@@ -15,11 +15,11 @@ public:
 	struct cbuffer /////////////////////////////////////////////////////要変更
 	{
 #define MAX_BONES 32
-		XMFLOAT4X4 world_view_projection; //ワールド・ビュー・プロジェクション合成行列
-		XMFLOAT4X4 world; //ワールド変換行列
-		XMFLOAT4 material_color; //材質色
-		XMFLOAT4 light_direction; //ライト進行方向 
-		XMFLOAT4X4 bone_transforms[MAX_BONES] = { { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 } };
+		DirectX::XMFLOAT4X4 world_view_projection; //ワールド・ビュー・プロジェクション合成行列
+		DirectX::XMFLOAT4X4 world; //ワールド変換行列
+		DirectX::XMFLOAT4 material_color; //材質色
+		DirectX::XMFLOAT4 light_direction; //ライト進行方向 
+		DirectX::XMFLOAT4X4 bone_transforms[MAX_BONES] = { { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 } };
 	};
 
 	struct vertex
@@ -35,7 +35,7 @@ public:
 	struct material
 	{
 		DirectX::XMFLOAT4 color = { 0.8f, 0.8f, 0.8f, 1.0f };
-		WCHAR* TexPass;
+		std::wstring TexPass;
 		std::string TexName;
 		unsigned long ID;
 	};

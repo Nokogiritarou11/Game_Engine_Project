@@ -22,27 +22,27 @@ void Object::Destroy(shared_ptr<GameObject> obj)
 	GameObject_Manager::Desytroy(obj);
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name)
+shared_ptr<GameObject> Object::Instantiate(std::string name)
 {
-	shared_ptr<Object> obj = GameObject_Manager::Instance(name);
+	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, shared_ptr<Transform> parent)
+shared_ptr<GameObject> Object::Instantiate(std::string name, shared_ptr<Transform> parent)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->parent = parent;
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, shared_ptr<Transform> parent, bool instantiateInWorldSpace)
+shared_ptr<GameObject> Object::Instantiate(std::string name, shared_ptr<Transform> parent, bool instantiateInWorldSpace)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->parent = parent;
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 euler)
+shared_ptr<GameObject> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 euler)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->position = position;
@@ -50,7 +50,7 @@ shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 posit
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT4 rotation)
+shared_ptr<GameObject> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT4 rotation)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->position = position;
@@ -58,7 +58,7 @@ shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 posit
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 euler, shared_ptr<Transform> parent)
+shared_ptr<GameObject> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 euler, shared_ptr<Transform> parent)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->parent = parent;
@@ -67,7 +67,7 @@ shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 posit
 	return obj;
 }
 
-shared_ptr<Object> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT4 rotation, shared_ptr<Transform> parent)
+shared_ptr<GameObject> Object::Instantiate(std::string name, DirectX::XMFLOAT3 position, DirectX::XMFLOAT4 rotation, shared_ptr<Transform> parent)
 {
 	shared_ptr<GameObject> obj = GameObject_Manager::Instance(name);
 	obj->transform->parent = parent;

@@ -21,7 +21,7 @@ Scene_Manager::~Scene_Manager()
 {
 }
 
-void Scene_Manager::CreateScene(Scene Scene_Class, string Scene_Name)
+void Scene_Manager::CreateScene(shared_ptr<Scene> Scene_Class, string Scene_Name)
 {
 	list<Scene_Data>::iterator itr_end = Scene_List.end();
 	for (list<Scene_Data>::iterator itr = Scene_List.begin(); itr != itr_end; itr++)
@@ -31,9 +31,24 @@ void Scene_Manager::CreateScene(Scene Scene_Class, string Scene_Name)
 			return;
 		}
 	}
-	shared_ptr<Scene> new_scene = make_shared<Scene>();
+	shared_ptr<Scene> new_scene = move(Scene_Class);
 	Scene_Data new_data = { Scene_Name,new_scene };
 	Scene_List.emplace_back(new_data);
+}
+
+void Scene_Manager::Set_StartScene(string Scene_Name)
+{
+	list<Scene_Data>::iterator itr_end = Scene_List.end();
+	for (list<Scene_Data>::iterator itr = Scene_List.begin(); itr != itr_end; itr++)
+	{
+		if (itr->Name == Scene_Name)
+		{
+			Active_Scene = itr->Scene_ptr;
+			itr->Scene_ptr->Initialize();
+			return;
+		}
+	}
+	
 }
 
 void Scene_Manager::LoadScene(string Scene_Name)
@@ -65,6 +80,7 @@ void Scene_Manager::Update()
 			{
 				Active_Scene = itr->Scene_ptr;
 				Load = false;
+				itr->Scene_ptr->Initialize();
 				break;
 			}
 		}

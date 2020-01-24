@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "GameObject_Manager.h"
 #include "MonoBehaviour_Manager.h"
+#include "Mesh_Renderer.h"
+#include "Transform.h"
 using namespace std;
 
 Scene::Scene()
@@ -33,4 +35,17 @@ void Scene::Update()
 {
 	GameObject_Manager::Update();
 	MonoBehaviour_Manager::Update();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Test_Scene::Initialize()
+{
+	shared_ptr<GameObject> Danbo = GameObject::Instantiate("Danbo");
+	shared_ptr<Mesh_Renderer> renderer = Danbo->AddComponent<Mesh_Renderer>();
+	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
+
+	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
+	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
+	camera->transform->position = { 0,0,0 };
 }

@@ -6,7 +6,6 @@ using namespace std;
 
 GameObject::GameObject()
 {
-    AddComponent<Transform>();
 }
 
 GameObject::~GameObject()

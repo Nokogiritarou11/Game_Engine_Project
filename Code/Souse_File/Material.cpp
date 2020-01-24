@@ -11,7 +11,7 @@ unordered_map<WCHAR, shared_ptr<Material>> Material::mat_cache;
 Material::Material()
 {
 }
-
+/*
 shared_ptr<Material> Material::Create()
 {
 }
@@ -19,7 +19,7 @@ shared_ptr<Material> Material::Create()
 shared_ptr<Material> Material::Create(std::string Material_Name, WCHAR* Shader_Name)
 {
 }
-
+*/
 shared_ptr<Material> Material::Create(std::string Material_Name, WCHAR* Shader_Name, const wchar_t* filename)
 {
 	setlocale(LC_ALL, "japanese");
@@ -41,6 +41,7 @@ shared_ptr<Material> Material::Create(std::string Material_Name, WCHAR* Shader_N
 		mat->texture->Load(filename);
 
 		mat_cache.insert(make_pair(*m_name, mat));
+		return mat;
 	}
 }
 

@@ -13,7 +13,8 @@ public:
 	Scene_Manager();
 	~Scene_Manager();
 
-	static void CreateScene(Scene Scene_Class, std::string Scene_Name);
+	static void CreateScene(std::shared_ptr<Scene> Scene_Class, std::string Scene_Name);
+	static void Set_StartScene(std::string Scene_Name);
 	static void LoadScene(std::string Scene_Name);
 
 	static void Instance_GameObject(std::shared_ptr<GameObject> gameObject);

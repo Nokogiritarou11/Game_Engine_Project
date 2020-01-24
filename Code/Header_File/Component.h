@@ -46,7 +46,7 @@ template<class T>
 std::shared_ptr<T> Component::AddComponent()
 {
 	std::shared_ptr<T> buff = std::make_shared<T>();
-	gameObject->Component_List.emplace_back(buff);
 	buff->Initialize(gameObject);
+	gameObject->Component_List.emplace_back(buff);
 	return buff;
 }

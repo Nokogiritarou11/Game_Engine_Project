@@ -25,6 +25,7 @@
     <FxCompile Include="Code\Shader\sprite_vs.hlsl">
       <Filter>Sources\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Code\Shader\Default_Mesh.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\Souse_File\Audio_Manager.cpp">

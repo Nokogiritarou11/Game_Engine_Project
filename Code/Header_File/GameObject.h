@@ -3,19 +3,13 @@
 #include <string>
 #include <list>
 #include <memory>
-#include "Object.h"
-
-class Component;
-class Transform;
+#include "Transform.h"
+#include "Mesh_Renderer.h"
+#include "MonoBehaviour_Manager.h"
 
 class GameObject : public Object
 {
 public:
-	unsigned int ID = NULL;
-	int layer = 0;
-	std::string tag = nullptr;
-	std::shared_ptr<Transform> transform;
-	std::list<std::shared_ptr<Component>> Component_List;
 
 	GameObject();
 	~GameObject();
@@ -23,6 +17,12 @@ public:
 	bool CompareTag(std::string _tag);
 	bool activeSelf();
 	void SetActive(bool value);
+
+	unsigned int ID = NULL;
+	int layer = 0;
+	std::string tag = "Default";
+	std::shared_ptr<Transform> transform;
+	std::list<std::shared_ptr<Component>> Component_List;
 
 	template<class T>
 	std::shared_ptr<T> GetComponent();
@@ -51,7 +51,7 @@ template<class T>
 std::shared_ptr<T> GameObject::AddComponent()
 {
 	std::shared_ptr<T> buff = std::make_shared<T>();
-	Component_List.push_back(buff);
 	buff->Initialize(std::static_pointer_cast<GameObject>(shared_from_this()));
+	Component_List.emplace_back(buff);
 	return buff;
 }

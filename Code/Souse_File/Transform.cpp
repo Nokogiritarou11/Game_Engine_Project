@@ -48,7 +48,7 @@ void Transform::Update()
 		XMMATRIX RotateYTempMatrix;
 		RotateYTempMatrix = XMMatrixRotationY(XMConvertToRadians(eulerAngles.y));
 
-		XMVECTOR right_v, up_v, forward_v;
+		XMVECTOR right_v = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), up_v = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), forward_v = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 
 		forward_v = XMVector3TransformCoord(XMLoadFloat4(&DefaultForward), RotateYTempMatrix);
 		right_v = XMVector3TransformCoord(XMLoadFloat4(&DefaultRight), RotateYTempMatrix);

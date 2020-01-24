@@ -9,7 +9,7 @@ class Transform : public Component
 public:
 	DirectX::XMFLOAT3 position = { 0, 0, 0 };
 	DirectX::XMFLOAT4 rotation = { 0, 0, 0 ,0 };
-	DirectX::XMFLOAT3 scale = { 0, 0, 0 };
+	DirectX::XMFLOAT3 scale = { 1, 1, 1 };
 	DirectX::XMFLOAT3 eulerAngles = { 0, 0, 0 };
 
 	DirectX::XMFLOAT3 localPosition = { 0, 0, 0 };

@@ -29,7 +29,7 @@ void GameObject_Manager::Desytroy(shared_ptr<GameObject> obj)
 void GameObject_Manager::Update()
 {
 	list<weak_ptr<GameObject>>::iterator itr_end = gameObject_List.end();
-	for (list<weak_ptr<GameObject>>::iterator itr = gameObject_List.begin(); itr != itr_end; itr++)
+	for (list<weak_ptr<GameObject>>::iterator itr = gameObject_List.begin(); itr != itr_end;)
 	{
 		if (itr->expired())
 		{
@@ -46,8 +46,9 @@ void GameObject_Manager::Update()
 shared_ptr<GameObject> GameObject_Manager::Instance(std::string name)
 {
 	shared_ptr<GameObject> obj = make_shared<GameObject>();
-	Scene_Manager::Instance_GameObject(obj);
+	obj->AddComponent<Transform>();
 	gameObject_List.emplace_back(obj);
+	Scene_Manager::Instance_GameObject(obj);
 	obj->name = name;
 	obj->ID = ID_Count;
 	ID_Count++;

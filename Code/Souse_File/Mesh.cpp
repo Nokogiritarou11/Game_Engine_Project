@@ -238,5 +238,6 @@ shared_ptr<Mesh> Mesh::Load_Mesh(const char* file_pass, const char* fbx_filename
 			}
 		}
 		cache.insert(make_pair(fullpass, mesh_ptr));
+		return mesh_ptr;
 	}
 }

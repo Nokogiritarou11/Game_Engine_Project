@@ -12,6 +12,7 @@ public:
 	Scene();
 	~Scene();
 
+	virtual void Initialize() {};
 	void Instance_GameObject(std::shared_ptr<GameObject> gameObject);
 	void Destroy_GameObject(std::shared_ptr<GameObject> gameObject);
 	void Update();
@@ -19,5 +20,14 @@ public:
 private:
 
 	std::list<std::shared_ptr<GameObject>> gameObject_List;
+
+};
+
+class Test_Scene : public Scene
+{
+public:
+	void Initialize();
+	
+private:
 
 };
