@@ -52,7 +52,7 @@ public:
 
 	static bool Initialize(HWND hWnd, int width, int height);
 	static void Release();
-	static void Clear(DWORD color = 0x00000000);
+	static void Clear(DWORD color = 0x0000FFFF);
 	static void Flip(int n = 0);
 
 	static int GetScreenWidth() { return ScreenWidth; }

@@ -44,8 +44,10 @@ void Test_Scene::Initialize()
 	shared_ptr<GameObject> Danbo = GameObject::Instantiate("Danbo");
 	shared_ptr<Mesh_Renderer> renderer = Danbo->AddComponent<Mesh_Renderer>();
 	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
+	Danbo->transform->eulerAngles = { -90,0,0 };
+	Danbo->transform->scale = { 0.1f,0.1f ,0.1f };
 
 	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
 	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
-	camera->transform->position = { 0,0,0 };
+	camera->transform->position = { 0,5,-25.0f };
 }

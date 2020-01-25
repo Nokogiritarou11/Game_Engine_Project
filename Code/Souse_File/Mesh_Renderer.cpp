@@ -68,6 +68,24 @@ void Mesh_Renderer::Render(std::shared_ptr<Camera> Render_Camera)
 				XMLoadFloat4x4(&mesh.global_transform) *
 				XMLoadFloat4x4(&transform->coordinate_conversion) *
 				XMLoadFloat4x4(&transform->world));
+			int anim_index = 0;
+			if (mesh.skeletal_animation.size() > 0 && mesh.skeletal_animation[anim_index].size() > 0)
+			{
+				int frame = 0;
+				frame = mesh.skeletal_animation[anim_index].animation_tick / mesh.skeletal_animation[anim_index].sampling_time;
+				if (frame > mesh.skeletal_animation[anim_index].size() - 1)
+				{
+					frame = 0;
+					mesh.skeletal_animation[anim_index].animation_tick = 0.0f;
+				}
+				vector<Mesh::bone> skeletal = mesh.skeletal_animation[anim_index].at(frame);
+				size_t number_of_bones = skeletal.size();
+				_ASSERT_EXPR(number_of_bones < MAX_BONES, L"'the number_of_bones' exceeds MAX_BONES.");
+				for (size_t i = 0; i < number_of_bones; i++)
+				{
+					XMStoreFloat4x4(&data.bone_transforms[i], XMLoadFloat4x4(&skeletal.at(i).transform));
+				}
+			}
 			DxSystem::DeviceContext->UpdateSubresource(mesh_data->ConstantBuffer.Get(), 0, nullptr, &data, 0, 0);
 			DxSystem::DeviceContext->VSSetConstantBuffers(0, 1, mesh_data->ConstantBuffer.GetAddressOf());
 			DxSystem::DeviceContext->IASetInputLayout(material[subset.diffuse.ID]->shader->VertexLayout.Get());
