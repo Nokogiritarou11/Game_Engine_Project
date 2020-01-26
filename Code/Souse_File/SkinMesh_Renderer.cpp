@@ -1,24 +1,24 @@
-#include "Mesh_Renderer.h"
+#include "SkinMesh_Renderer.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Render_Manager.h"
 using namespace std;
 
-Mesh_Renderer::Mesh_Renderer()
+SkinMesh_Renderer::SkinMesh_Renderer()
 {
 }
 
-Mesh_Renderer::~Mesh_Renderer()
+SkinMesh_Renderer::~SkinMesh_Renderer()
 {
 }
 
-void Mesh_Renderer::Initialize(shared_ptr<GameObject> obj)
+void SkinMesh_Renderer::Initialize(shared_ptr<GameObject> obj)
 {
 	gameObject = obj;
 	transform = obj->transform;
-	Render_Manager::Add(static_pointer_cast<Mesh_Renderer>(shared_from_this()));
+	Render_Manager::Add(static_pointer_cast<SkinMesh_Renderer>(shared_from_this()));
 	// 定数バッファの生成
-	if(!ConstantBuffer)
+	if (!ConstantBuffer)
 	{
 		D3D11_BUFFER_DESC bd = {};
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -32,7 +32,7 @@ void Mesh_Renderer::Initialize(shared_ptr<GameObject> obj)
 	}
 }
 
-void Mesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
+void SkinMesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
 {
 	mesh_data = Mesh_Data;
 	//material.clear();
@@ -43,14 +43,14 @@ void Mesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
 		{
 			mesh_data->skin_meshes[i].subsets[j].diffuse.ID = Subset_ID;
 			string Mat_Name = mesh_data->name + "_" + mesh_data->skin_meshes[i].subsets[j].diffuse.TexName;
-			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_Mesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str());
+			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_SKinMesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str());
 			material.emplace_back(Mat);
 			Subset_ID++;
 		}
 	}
 }
 
-void Mesh_Renderer::Render(std::shared_ptr<Camera> Render_Camera)
+void SkinMesh_Renderer::Render(std::shared_ptr<Camera> Render_Camera)
 {
 	// ワールド行列、ビュー行列、プロジェクション行列を合成し行列データを取り出す。
 	XMMATRIX WVP;
@@ -81,6 +81,30 @@ void Mesh_Renderer::Render(std::shared_ptr<Camera> Render_Camera)
 				XMLoadFloat4x4(&mesh.global_transform) *
 				XMLoadFloat4x4(&transform->coordinate_conversion) *
 				XMLoadFloat4x4(&transform->world));
+
+			int frame = 0;
+			frame = Animation_Time / mesh.skeletal_animation[Animation_Index].sampling_time;
+			if (frame > mesh.skeletal_animation[Animation_Index].size() - 1)
+			{
+				if (!Animation_Loop)
+				{
+					frame = 0;
+				}
+				else
+				{
+					frame = mesh.skeletal_animation[Animation_Index].size() - 1;
+				}
+				Animation_Time = 0.0f;
+			}
+			Animation_Rate = (float)frame / mesh.skeletal_animation[Animation_Index].size();
+			vector<Mesh::bone> skeletal = mesh.skeletal_animation[Animation_Index].at(frame);
+			size_t number_of_bones = skeletal.size();
+			_ASSERT_EXPR(number_of_bones < MAX_BONES, L"'the number_of_bones' exceeds MAX_BONES.");
+			for (size_t i = 0; i < number_of_bones; i++)
+			{
+				XMStoreFloat4x4(&data.bone_transforms[i], XMLoadFloat4x4(&skeletal.at(i).transform));
+			}
+
 			DxSystem::DeviceContext->UpdateSubresource(ConstantBuffer.Get(), 0, nullptr, &data, 0, 0);
 			DxSystem::DeviceContext->VSSetConstantBuffers(0, 1, ConstantBuffer.GetAddressOf());
 			DxSystem::DeviceContext->IASetInputLayout(material[subset.diffuse.ID]->shader->VertexLayout.Get());

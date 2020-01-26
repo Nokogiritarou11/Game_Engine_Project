@@ -2,6 +2,8 @@
 #include "GameObject_Manager.h"
 #include "MonoBehaviour_Manager.h"
 #include "Mesh_Renderer.h"
+#include "SkinMesh_Renderer.h"
+#include "Animator.h"
 #include "Transform.h"
 using namespace std;
 
@@ -42,7 +44,10 @@ void Scene::Update()
 void Test_Scene::Initialize()
 {
 	shared_ptr<GameObject> Danbo = GameObject::Instantiate("Danbo");
-	shared_ptr<Mesh_Renderer> renderer = Danbo->AddComponent<Mesh_Renderer>();
+	shared_ptr<SkinMesh_Renderer> renderer = Danbo->AddComponent<SkinMesh_Renderer>();
+	shared_ptr<Animator> animator = Danbo->AddComponent<Animator>();
+	animator->Set_Skin_Renderer(renderer);
+	animator->Animation_Loop = true;
 	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
 	Danbo->transform->eulerAngles = { -90,0,0 };
 	Danbo->transform->scale = { 0.1f,0.1f ,0.1f };

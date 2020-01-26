@@ -12,15 +12,6 @@
 class Mesh
 {
 public:
-	struct cbuffer /////////////////////////////////////////////////////要変更
-	{
-#define MAX_BONES 32
-		DirectX::XMFLOAT4X4 world_view_projection; //ワールド・ビュー・プロジェクション合成行列
-		DirectX::XMFLOAT4X4 world; //ワールド変換行列
-		DirectX::XMFLOAT4 material_color; //材質色
-		DirectX::XMFLOAT4 light_direction; //ライト進行方向 
-		DirectX::XMFLOAT4X4 bone_transforms[MAX_BONES] = { { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 } };
-	};
 
 	struct vertex
 	{
@@ -78,8 +69,6 @@ public:
 	};
 
 	typedef std::vector<bone_influence> bone_influences_per_control_point;
-
-	ComPtr <ID3D11Buffer> ConstantBuffer; //コンスタントバッファ
 
 	meshes skin_meshes;
 	std::string name;

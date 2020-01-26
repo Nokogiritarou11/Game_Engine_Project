@@ -26,6 +26,7 @@
       <Filter>Sources\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Code\Shader\Default_Mesh.fx" />
+    <FxCompile Include="Code\Shader\Default_SkinMesh.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\Souse_File\Audio_Manager.cpp">
@@ -40,19 +41,10 @@
     <ClCompile Include="Code\Souse_File\main.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\Resource_Manager.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\Shader.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\skinned_mesh.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\Sprite.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Souse_File\static_mesh.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
     <ClCompile Include="Code\Souse_File\Texture.cpp">
@@ -81,6 +73,9 @@
     <ClCompile Include="Code\Souse_File\Mesh_Renderer.cpp" />
     <ClCompile Include="Code\Souse_File\Mesh.cpp" />
     <ClCompile Include="Code\Souse_File\Render_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\SkinMesh_Renderer.cpp" />
+    <ClCompile Include="Code\Souse_File\Animator.cpp" />
+    <ClCompile Include="Code\Souse_File\Animator_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">
@@ -98,22 +93,13 @@
     <ClInclude Include="Code\Header_File\Original_Math.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\Resource_Manager.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Code\Header_File\Scene.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\Shader.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Header_File\skinned_mesh.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Code\Header_File\Sprite.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\static_mesh.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\Texture.h">
@@ -139,6 +125,9 @@
     <ClInclude Include="Code\Header_File\Mesh_Renderer.h" />
     <ClInclude Include="Code\Header_File\Mesh.h" />
     <ClInclude Include="Code\Header_File\Render_Manager.h" />
+    <ClInclude Include="Code\Header_File\SkinMesh_Renderer.h" />
+    <ClInclude Include="Code\Header_File\Animator.h" />
+    <ClInclude Include="Code\Header_File\Animator_Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\Shader\skinned_mesh.hlsli">

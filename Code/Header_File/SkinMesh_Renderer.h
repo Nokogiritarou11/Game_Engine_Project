@@ -3,16 +3,22 @@
 #include "Mesh.h"
 #include "Camera.h"
 
-class Mesh_Renderer : public Renderer
+class SkinMesh_Renderer : public Renderer
 {
 public:
 
-	Mesh_Renderer();
-	~Mesh_Renderer();
+	SkinMesh_Renderer();
+	~SkinMesh_Renderer();
 
 	void Initialize(std::shared_ptr<GameObject> obj);
 	void Set_Mesh(std::shared_ptr<Mesh> Mesh_Data);
 	void Render(std::shared_ptr<Camera> Render_Camera);
+
+	int Animation_Index = 0;
+	float Animation_Time = 0;
+	float Animation_Rate = 0;
+	bool Animation_Loop = false;
+
 private:
 
 	struct cbuffer /////////////////////////////////////////////////////要変更
@@ -22,6 +28,7 @@ private:
 		DirectX::XMFLOAT4X4 world; //ワールド変換行列
 		DirectX::XMFLOAT4 material_color; //材質色
 		DirectX::XMFLOAT4 light_direction; //ライト進行方向 
+		DirectX::XMFLOAT4X4 bone_transforms[MAX_BONES] = { { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 } };
 	};
 
 	ComPtr <ID3D11Buffer> ConstantBuffer; //コンスタントバッファ
