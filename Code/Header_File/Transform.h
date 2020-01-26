@@ -29,6 +29,9 @@ public:
 	DirectX::XMFLOAT4X4 rotation_matrix = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	DirectX::XMFLOAT4X4 translation_matrix = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
+	float Width = 100;
+	float Height = 100;
+
 	std::weak_ptr<Transform> parent;
 
 	// convert coordinate system from 'UP:+Z FRONT:+Y RIGHT-HAND' to 'UP:+Y FRONT:+Z LEFT-HAND'

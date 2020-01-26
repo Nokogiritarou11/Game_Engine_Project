@@ -1,14 +1,28 @@
-#include "Sprite.h"
+#include "Sprite_Renderer.h"
 #include "DxSystem.h"
+#include "GameObject.h"
+#include "Render_Manager.h"
+using namespace std;
 
-Sprite::Sprite() :texture(nullptr)
+Sprite_Renderer::Sprite_Renderer()
 {
+}
+
+Sprite_Renderer::~Sprite_Renderer()
+{
+}
+
+void Sprite_Renderer::Initialize(shared_ptr<GameObject> obj)
+{
+	gameObject = obj;
+	transform = obj->transform;
+	Render_Manager::Add(static_pointer_cast<Sprite_Renderer>(shared_from_this()));
 
 	VERTEX v[] = {
-		XMFLOAT3(-0.5f, 0.5f,0), XMFLOAT3(0,0,1), XMFLOAT2(0,0), XMFLOAT4(1,1,1,1), //左上
-		XMFLOAT3(0.5f, 0.5f,0),  XMFLOAT3(0,0,1), XMFLOAT2(1,0), XMFLOAT4(1,1,1,1), //右上
-		XMFLOAT3(-0.5f,-0.5f,0), XMFLOAT3(0,0,1), XMFLOAT2(0,1), XMFLOAT4(1,1,1,1), //左下
-		XMFLOAT3(0.5f,-0.5f,0),  XMFLOAT3(0,0,1), XMFLOAT2(1,1), XMFLOAT4(1,1,1,1), //右下
+		XMFLOAT3(-0.5f, 0.5f,0), XMFLOAT2(0,0), XMFLOAT4(1,1,1,1), //左上
+		XMFLOAT3(0.5f, 0.5f,0), XMFLOAT2(1,0), XMFLOAT4(1,1,1,1), //右上
+		XMFLOAT3(-0.5f,-0.5f,0), XMFLOAT2(0,1), XMFLOAT4(1,1,1,1), //左下
+		XMFLOAT3(0.5f,-0.5f,0), XMFLOAT2(1,1), XMFLOAT4(1,1,1,1), //右下
 	};
 
 	//	頂点バッファ作成
@@ -30,82 +44,74 @@ Sprite::Sprite() :texture(nullptr)
 	ZeroMemory(&depth_stencil_desc, sizeof(depth_stencil_desc));
 	depth_stencil_desc.DepthEnable = FALSE;
 	DxSystem::Device->CreateDepthStencilState(&depth_stencil_desc, DepthStencilState.GetAddressOf());
-
 }
 
-
-Sprite::Sprite(const wchar_t* filename) :texture(nullptr)
+void Sprite_Renderer::Set_Texture(std::string Material_Name, WCHAR* Shader_Name, const wchar_t* filename)
 {
-
-	VERTEX v[] = {
-		XMFLOAT3(-0.5f, 0.5f,0), XMFLOAT3(0,0,1), XMFLOAT2(0,0), XMFLOAT4(1,1,1,1), //左上
-		XMFLOAT3(0.5f, 0.5f,0),  XMFLOAT3(0,0,1), XMFLOAT2(1,0), XMFLOAT4(1,1,1,1), //右上
-		XMFLOAT3(-0.5f,-0.5f,0), XMFLOAT3(0,0,1), XMFLOAT2(0,1), XMFLOAT4(1,1,1,1), //左下
-		XMFLOAT3(0.5f,-0.5f,0),  XMFLOAT3(0,0,1), XMFLOAT2(1,1), XMFLOAT4(1,1,1,1), //右下
-	};
-
-	//	頂点バッファ作成
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd)); // 全０
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(v);
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
-	D3D11_SUBRESOURCE_DATA res;
-	ZeroMemory(&res, sizeof(res));
-	res.pSysMem = v;
-
-	DxSystem::Device->CreateBuffer(&bd, &res, VertexBuffer.GetAddressOf());
-
-	//	テクスチャ読み込み
-	if (filename) {
-		texture = new Texture();
-		texture->Load(filename);
-	}
-
-
-	//デプスステンシルステート
-	D3D11_DEPTH_STENCIL_DESC depth_stencil_desc;
-	ZeroMemory(&depth_stencil_desc, sizeof(depth_stencil_desc));
-	depth_stencil_desc.DepthEnable = FALSE;
-	DxSystem::Device->CreateDepthStencilState(&depth_stencil_desc, DepthStencilState.GetAddressOf());
-
+	material = Material::Create(Material_Name, Shader_Name, filename, true);
 }
 
-
-Sprite::~Sprite()
+void Sprite_Renderer::Render(shared_ptr<Camera> Render_Camera)
 {
-	SAFE_DELETE(texture);
-
-}
-
-
-void Sprite::Render(Shader* shader,
-	float dx, float dy, float dw, float dh,
-	float sx, float sy, float sw, float sh,
-	float alpha
-)
-{
-	shader->Activate();
+	DxSystem::DeviceContext->IASetPrimitiveTopology(
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
+	);
+	material->shader->Activate();
 	//頂点データ設定
 	VERTEX data[4];
 
-	data[0].Pos.x = dx;
-	data[0].Pos.y = dy;
+	shared_ptr<Transform> trans = gameObject->transform;
+
+	data[0].Pos.x = trans->position.x;
+	data[0].Pos.y = trans->position.y;
 	data[0].Pos.z = 0.0f;
 
-	data[1].Pos.x = dx + dw;
-	data[1].Pos.y = dy;
+	data[1].Pos.x = trans->position.x + trans->Width;
+	data[1].Pos.y = trans->position.y;
 	data[1].Pos.z = 0.0f;
 
-	data[2].Pos.x = dx;
-	data[2].Pos.y = dy + dh;
+	data[2].Pos.x = trans->position.x;
+	data[2].Pos.y = trans->position.y + trans->Height;
 	data[2].Pos.z = 0.0f;
 
-	data[3].Pos.x = dx + dw;
-	data[3].Pos.y = dy + dh;
+	data[3].Pos.x = trans->position.x + trans->Width;
+	data[3].Pos.y = trans->position.y + trans->Height;
 	data[3].Pos.z = 0.0f;
 
+	// 中心座標を原点へ
+	float mx = trans->position.x + trans->Width * 0.5f;
+	float my = trans->position.y + trans->Height * 0.5f;
+	data[0].Pos.x -= mx; data[0].Pos.y -= my;
+	data[1].Pos.x -= mx; data[1].Pos.y -= my;
+	data[2].Pos.x -= mx; data[2].Pos.y -= my;
+	data[3].Pos.x -= mx; data[3].Pos.y -= my;
+
+	// 角度計算
+	float rx, ry;
+	float cos = cosf(XMConvertToRadians(trans->eulerAngles.z));
+	float sin = sinf(XMConvertToRadians(trans->eulerAngles.z));
+	rx = data[0].Pos.x;
+	ry = data[0].Pos.y;
+	data[0].Pos.x = cos * rx + -sin * ry;
+	data[0].Pos.y = sin * rx + cos * ry;
+	rx = data[1].Pos.x;
+	ry = data[1].Pos.y;
+	data[1].Pos.x = cos * rx + -sin * ry;
+	data[1].Pos.y = sin * rx + cos * ry;
+	rx = data[2].Pos.x;
+	ry = data[2].Pos.y;
+	data[2].Pos.x = cos * rx + -sin * ry;
+	data[2].Pos.y = sin * rx + cos * ry;
+	rx = data[3].Pos.x;
+	ry = data[3].Pos.y;
+	data[3].Pos.x = cos * rx + -sin * ry;
+	data[3].Pos.y = sin * rx + cos * ry;
+
+	// 動かした分戻す
+	data[0].Pos.x += mx; data[0].Pos.y += my;
+	data[1].Pos.x += mx; data[1].Pos.y += my;
+	data[2].Pos.x += mx; data[2].Pos.y += my;
+	data[3].Pos.x += mx; data[3].Pos.y += my;
 
 	// 正規化デバイス座標系
 	for (int i = 0; i < 4; i++) {
@@ -114,36 +120,31 @@ void Sprite::Render(Shader* shader,
 		data[i].Pos.z = 0.0f;
 	}
 
-
 	//テクスチャ座標設定
-	data[0].Tex.x = sx;
-	data[0].Tex.y = sy;
-	data[1].Tex.x = sx + sw;
-	data[1].Tex.y = sy;
-	data[2].Tex.x = sx;
-	data[2].Tex.y = sy + sh;
-	data[3].Tex.x = sx + sw;
-	data[3].Tex.y = sy + sh;
+	data[0].Tex.x = material->UV_Origin.x;
+	data[0].Tex.y = material->UV_Origin.y;
+	data[1].Tex.x = material->UV_Origin.x + material->UV_Size.x;
+	data[1].Tex.y = material->UV_Origin.y;
+	data[2].Tex.x = material->UV_Origin.x;
+	data[2].Tex.y = material->UV_Origin.y + material->UV_Size.y;
+	data[3].Tex.x = material->UV_Origin.x + material->UV_Size.x;
+	data[3].Tex.y = material->UV_Origin.y + material->UV_Size.y;
 
 	//UV座標
+	float w = material->texture->GetWidth();
+	float h = material->texture->GetHeight();
 	for (int i = 0; i < 4; i++) {
-		data[i].Tex.x = data[i].Tex.x / texture->GetWidth();
-		data[i].Tex.y = data[i].Tex.y / texture->GetHeight();
+		data[i].Tex.x = data[i].Tex.x / w;
+		data[i].Tex.y = data[i].Tex.y / h;
 	}
 	//頂点カラー
-	data[0].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[1].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[2].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[3].Color = XMFLOAT4(1, 1, 1, alpha);
-	//法線
-	data[0].Normal = XMFLOAT3(0, 0, 1);
-	data[1].Normal = XMFLOAT3(0, 0, 1);
-	data[2].Normal = XMFLOAT3(0, 0, 1);
-	data[3].Normal = XMFLOAT3(0, 0, 1);
+	data[0].Color = material->color;
+	data[1].Color = material->color;
+	data[2].Color = material->color;
+	data[3].Color = material->color;
 
-	//頂点データ更新
-	DxSystem::DeviceContext->UpdateSubresource(VertexBuffer.Get(), 0, NULL, data, 0, 0);
 
+	DxSystem::DeviceContext->IASetInputLayout(material->shader->VertexLayout.Get());
 	//	頂点バッファの指定
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
@@ -152,102 +153,17 @@ void Sprite::Render(Shader* shader,
 		&stride,		// １頂点のサイズ
 		&offset			// 開始位置
 	);
-	DxSystem::DeviceContext->IASetPrimitiveTopology(
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
-	);
-	//テクスチャの設定
-	if (texture) texture->Set();
-
-	DxSystem::DeviceContext->Draw(4, 0);
-}
-
-void Sprite::Render(Shader* shader,
-	Texture* tex,
-	float dx, float dy, float dw, float dh,
-	float sx, float sy, float sw, float sh,
-	float alpha
-)
-{
-	shader->Activate();
-	//頂点データ設定
-	VERTEX data[4];
-
-	data[0].Pos.x = dx;
-	data[0].Pos.y = dy;
-	data[0].Pos.z = 0.0f;
-
-	data[1].Pos.x = dx + dw;
-	data[1].Pos.y = dy;
-	data[1].Pos.z = 0.0f;
-
-	data[2].Pos.x = dx;
-	data[2].Pos.y = dy + dh;
-	data[2].Pos.z = 0.0f;
-
-	data[3].Pos.x = dx + dw;
-	data[3].Pos.y = dy + dh;
-	data[3].Pos.z = 0.0f;
-
-
-	// 正規化デバイス座標系
-	for (int i = 0; i < 4; i++) {
-		data[i].Pos.x = 2.0f * data[i].Pos.x / DxSystem::GetScreenWidth() - 1.0f;
-		data[i].Pos.y = 1.0f - 2.0f * data[i].Pos.y / DxSystem::GetScreenHeight();
-		data[i].Pos.z = 0.0f;
-	}
-
-
-	//テクスチャ座標設定
-	data[0].Tex.x = sx;
-	data[0].Tex.y = sy;
-	data[1].Tex.x = sx + sw;
-	data[1].Tex.y = sy;
-	data[2].Tex.x = sx;
-	data[2].Tex.y = sy + sh;
-	data[3].Tex.x = sx + sw;
-	data[3].Tex.y = sy + sh;
-
-	//UV座標
-	for (int i = 0; i < 4; i++) {
-		data[i].Tex.x = data[i].Tex.x / tex->GetWidth();
-		data[i].Tex.y = data[i].Tex.y / tex->GetHeight();
-	}
-	//頂点カラー
-	data[0].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[1].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[2].Color = XMFLOAT4(1, 1, 1, alpha);
-	data[3].Color = XMFLOAT4(1, 1, 1, alpha);
-	//法線
-	data[0].Normal = XMFLOAT3(0, 0, 1);
-	data[1].Normal = XMFLOAT3(0, 0, 1);
-	data[2].Normal = XMFLOAT3(0, 0, 1);
-	data[3].Normal = XMFLOAT3(0, 0, 1);
-
-	//頂点データ更新
 	DxSystem::DeviceContext->UpdateSubresource(VertexBuffer.Get(), 0, NULL, data, 0, 0);
 
-	//	頂点バッファの指定
-	UINT stride = sizeof(VERTEX);
-	UINT offset = 0;
-	DxSystem::DeviceContext->IASetVertexBuffers(
-		0, 1, VertexBuffer.GetAddressOf(), // スロット, 数, バッファ
-		&stride,		// １頂点のサイズ
-		&offset			// 開始位置
-	);
-	DxSystem::DeviceContext->IASetPrimitiveTopology(
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
-	);
-	DxSystem::DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 1);
-
 	//テクスチャの設定
-	if (tex) tex->Set();
+	material->texture->Set();
 
 	DxSystem::DeviceContext->Draw(4, 0);
 }
 
 /*
 //スプライトバッチ
-sprite_batch::sprite_batch(ID3D11Device* device, const wchar_t* TexName, size_t max_instance) : MAX_INSTANCES(max_instance)
+Sprite_Renderer_batch::Sprite_Renderer_batch(ID3D11Device* device, const wchar_t* TexName, size_t max_instance) : MAX_INSTANCES(max_instance)
 {
 	HRESULT hr = S_OK;
 
@@ -284,8 +200,8 @@ sprite_batch::sprite_batch(ID3D11Device* device, const wchar_t* TexName, size_t 
 		{ "TEXCOORD_TRANSFORM", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 	};
-	create_vs_from_cso(device, "sprite_batch_vs.cso", g_pVertexShader.GetAddressOf(), g_pVertexLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
-	create_ps_from_cso(device, "sprite_batch_ps.cso", g_pPixelShader.GetAddressOf());
+	create_vs_from_cso(device, "Sprite_Renderer_batch_vs.cso", g_pVertexShader.GetAddressOf(), g_pVertexLayout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
+	create_ps_from_cso(device, "Sprite_Renderer_batch_ps.cso", g_pPixelShader.GetAddressOf());
 
 	instance* instances = new instance[MAX_INSTANCES];
 	{
@@ -308,7 +224,7 @@ sprite_batch::sprite_batch(ID3D11Device* device, const wchar_t* TexName, size_t 
 
 	D3D11_RASTERIZER_DESC rasterizer_desc = {};
 	rasterizer_desc.FillMode = D3D11_FILL_SOLID; //D3D11_FILL_WIREFRAME, D3D11_FILL_SOLID
-	rasterizer_desc.CullMode = D3D11_CULL_NONE; //D3D11_CULL_NONE, D3D11_CULL_FRONT, D3D11_CULL_BACK   
+	rasterizer_desc.CullMode = D3D11_CULL_NONE; //D3D11_CULL_NONE, D3D11_CULL_FRONT, D3D11_CULL_BACK
 	rasterizer_desc.FrontCounterClockwise = FALSE;
 	rasterizer_desc.DepthBias = 0;
 	rasterizer_desc.DepthBiasClamp = 0;
@@ -355,7 +271,7 @@ sprite_batch::sprite_batch(ID3D11Device* device, const wchar_t* TexName, size_t 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 }
 
-void sprite_batch::begin(ID3D11DeviceContext* g_pImmediateContext)
+void Sprite_Renderer_batch::begin(ID3D11DeviceContext* g_pImmediateContext)
 {
 	HRESULT hr = S_OK;
 
@@ -383,7 +299,7 @@ void sprite_batch::begin(ID3D11DeviceContext* g_pImmediateContext)
 
 	count_instance = 0;
 }
-void sprite_batch::render(ID3D11DeviceContext* g_pImmediateContext,
+void Sprite_Renderer_batch::render(ID3D11DeviceContext* g_pImmediateContext,
 	float dx, float dy,
 	float dw, float dh,
 	float sx, float sy,
@@ -423,7 +339,7 @@ void sprite_batch::render(ID3D11DeviceContext* g_pImmediateContext,
 	count_instance++;
 }
 
-void sprite_batch::end(ID3D11DeviceContext* g_pImmediateContext)
+void Sprite_Renderer_batch::end(ID3D11DeviceContext* g_pImmediateContext)
 {
 	g_pImmediateContext->Unmap(instance_buffer.Get(), 0);
 

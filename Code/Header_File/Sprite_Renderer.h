@@ -6,41 +6,39 @@ using namespace DirectX;
 #include <string>
 #include <wrl.h>
 #include <d3dcompiler.h>
+#include "Material.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Renderer.h"
 
-class Sprite
+class Sprite_Renderer : public Renderer
 {
 private:
-	ComPtr<ID3D11Buffer> VertexBuffer;
-	Texture* texture;
 
+	struct VERTEX
+	{
+		DirectX::XMFLOAT3 Pos;	//位置
+		DirectX::XMFLOAT2 Tex;	//UV座標
+		DirectX::XMFLOAT4 Color;	//頂点色
+	};
+
+	ComPtr<ID3D11Buffer> VertexBuffer;
 	ComPtr<ID3D11DepthStencilState> DepthStencilState;
 
 public:
-	Sprite();
-	Sprite(const wchar_t* filename);
-	~Sprite();
-	void Render(Shader* shader,
-		float dx, float dy, float dw, float dh,
-		float sx, float sy, float sw, float sh,
-		float alpha = 1.0f
-	);
-	void Render(Shader* shader,
-		Texture* tex,
-		float dx, float dy, float dw, float dh,
-		float sx, float sy, float sw, float sh,
-		float alpha = 1.0f
-	);
+	Sprite_Renderer();
+	~Sprite_Renderer();
 
-	ID3D11RenderTargetView* GetRenderTarget() { return texture->GetRenderTarget(); }
-	void SetTexture(u_int slot) { texture->Set(slot); }
+	std::shared_ptr<Material> material;
 
+	void Initialize(std::shared_ptr<GameObject> obj);
+	void Set_Texture(std::string Material_Name, WCHAR* Shader_Name, const wchar_t* filename);
+	void Render(std::shared_ptr<Camera> Render_Camera);
 };
 
 /*
 
-class sprite_batch
+class Sprite_Renderer_batch
 {
 private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> g_pVertexShader;
@@ -68,7 +66,7 @@ public:
 		XMFLOAT2 texcoord;
 	};
 
-	sprite_batch(ID3D11Device* device, const wchar_t* TexName, size_t max_instance = 256);
+	Sprite_Renderer_batch(ID3D11Device* device, const wchar_t* TexName, size_t max_instance = 256);
 
 	void begin(ID3D11DeviceContext* g_pImmediateContext);
 	void render(ID3D11DeviceContext* g_pImmediateContext,

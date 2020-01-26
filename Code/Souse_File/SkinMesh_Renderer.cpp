@@ -32,7 +32,7 @@ void SkinMesh_Renderer::Initialize(shared_ptr<GameObject> obj)
 	}
 }
 
-void SkinMesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
+void SkinMesh_Renderer::Set_Mesh(shared_ptr<Mesh> Mesh_Data)
 {
 	mesh_data = Mesh_Data;
 	//material.clear();
@@ -43,14 +43,14 @@ void SkinMesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
 		{
 			mesh_data->skin_meshes[i].subsets[j].diffuse.ID = Subset_ID;
 			string Mat_Name = mesh_data->name + "_" + mesh_data->skin_meshes[i].subsets[j].diffuse.TexName;
-			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_SKinMesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str());
+			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_SKinMesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str(), false);
 			material.emplace_back(Mat);
 			Subset_ID++;
 		}
 	}
 }
 
-void SkinMesh_Renderer::Render(std::shared_ptr<Camera> Render_Camera)
+void SkinMesh_Renderer::Render(shared_ptr<Camera> Render_Camera)
 {
 	// ワールド行列、ビュー行列、プロジェクション行列を合成し行列データを取り出す。
 	XMMATRIX WVP;

@@ -3,6 +3,7 @@
 #include "MonoBehaviour_Manager.h"
 #include "Mesh_Renderer.h"
 #include "SkinMesh_Renderer.h"
+#include "Sprite_Renderer.h"
 #include "Animator.h"
 #include "Transform.h"
 using namespace std;
@@ -51,6 +52,11 @@ void Test_Scene::Initialize()
 	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
 	Danbo->transform->eulerAngles = { -90,0,0 };
 	Danbo->transform->scale = { 0.1f,0.1f ,0.1f };
+
+	shared_ptr<GameObject> image = GameObject::Instantiate("image");
+	shared_ptr<Sprite_Renderer> s_renderer = image->AddComponent<Sprite_Renderer>();
+	s_renderer->Set_Texture("Test", L"Code/Shader/2D.fx", L"Image\\UI”Ä—pŽlŠp.png");
+	s_renderer->material->color = { 1.0f,1.0f,1.0f,1.0f };
 
 	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
 	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();

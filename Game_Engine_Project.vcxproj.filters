@@ -4,15 +4,6 @@
     <FxCompile Include="Code\Shader\2D.fx">
       <Filter>Sources\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Code\Shader\skinned_mesh_material_ps.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\Shader\skinned_mesh_ps.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\Shader\skinned_mesh_vs.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="Code\Shader\sprite_batch_ps.hlsl">
       <Filter>Sources\Shaders</Filter>
     </FxCompile>
@@ -44,9 +35,6 @@
     <ClCompile Include="Code\Souse_File\Shader.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Souse_File\Sprite.cpp">
-      <Filter>Sources\Reaources</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Souse_File\Texture.cpp">
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
@@ -76,6 +64,10 @@
     <ClCompile Include="Code\Souse_File\SkinMesh_Renderer.cpp" />
     <ClCompile Include="Code\Souse_File\Animator.cpp" />
     <ClCompile Include="Code\Souse_File\Animator_Manager.cpp" />
+    <ClCompile Include="Code\Souse_File\Sprite_Renderer.cpp">
+      <Filter>Sources\Reaources</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Souse_File\Rect_Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">
@@ -97,9 +89,6 @@
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\Shader.h">
-      <Filter>Sources\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Header_File\Sprite.h">
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\Texture.h">
@@ -128,11 +117,12 @@
     <ClInclude Include="Code\Header_File\SkinMesh_Renderer.h" />
     <ClInclude Include="Code\Header_File\Animator.h" />
     <ClInclude Include="Code\Header_File\Animator_Manager.h" />
+    <ClInclude Include="Code\Header_File\Sprite_Renderer.h">
+      <Filter>Sources\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Header_File\RectTransform.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Code\Shader\skinned_mesh.hlsli">
-      <Filter>Sources\Shaders</Filter>
-    </None>
     <None Include="Code\Shader\sprite.hlsli">
       <Filter>Sources\Shaders</Filter>
     </None>

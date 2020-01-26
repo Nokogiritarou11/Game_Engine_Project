@@ -1,58 +1,24 @@
 
-//--------------------------------------------
-//	テクスチャ
-//--------------------------------------------
+Texture2D tex2d : register(t0);
+SamplerState smpState : register(s0);
 
-Texture2D DiffuseTexture : register(t0);
-SamplerState DecalSampler : register(s0);
-
-//--------------------------------------------
-//	グローバル変数
-//--------------------------------------------
-
-//--------------------------------------------
-//	データーフォーマット
-//--------------------------------------------
-
-struct VSInput
+struct VS_OUT
 {
-	float3 Position : POSITION;
-	float3 Normal   : NORMAL;
-	float2 Tex      : TEXCOORD;
-	float4 Color    : COLOR;
+	float4 position : SV_POSITION;
+	float2 texcoord : TEXCOORD;
+	float4 color : COLOR;
 };
 
-struct PSInput
+VS_OUT VSMain(float3 position : POSITION, float2 texcoord : TEXCOORD, float4 color : COLOR)
 {
-	float4 Position : SV_POSITION;
-	float2 Tex : TEXCOORD;
-	float4 Color : COLOR;
-};
-
-//--------------------------------------------
-//	頂点シェーダー
-//--------------------------------------------
-
-PSInput VSMain(VSInput input)
-{
-	PSInput output = (PSInput)0;
-
-	// 出力値設定.
-	output.Position = float4(input.Position, 1);
-	output.Color = input.Color;
-	//output.Color = float4(1,1,1,1);
-	output.Tex = input.Tex;
-
-	return output;
+	VS_OUT vout;
+	vout.position = float4(position, 1);
+	vout.color = color;
+	vout.texcoord = texcoord;
+	return vout;
 }
 
-//--------------------------------------------
-//	ピクセルシェーダー
-//--------------------------------------------
-
-float4 PSMain(PSInput input) : SV_TARGET0
+float4 PSMain(VS_OUT pin) : SV_TARGET
 {
-	float4 color = DiffuseTexture.Sample(DecalSampler, input.Tex) * input.Color;
-
-	return color;
+	return tex2d.Sample(smpState, pin.texcoord) * pin.color;
 }

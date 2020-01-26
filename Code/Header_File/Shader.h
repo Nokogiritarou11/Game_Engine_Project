@@ -25,8 +25,8 @@ protected:
 		ID3D11InputLayout* input_layout;
 	};
 
-	static std::unordered_map<WCHAR, set_of_vertex_shader_and_input_layout> vertex_cache;
-	static std::unordered_map<WCHAR, ID3D11PixelShader*> pixel_cache;
+	static std::unordered_map<std::wstring, set_of_vertex_shader_and_input_layout> vertex_cache;
+	static std::unordered_map<std::wstring, ID3D11PixelShader*> pixel_cache;
 public:
 
 	ComPtr<ID3D11InputLayout>		VertexLayout;
@@ -34,24 +34,9 @@ public:
 	Shader() { /*ZeroMemory(this, sizeof(Shader));*/ }
 	virtual ~Shader();
 
-	bool Create(WCHAR* filename, LPCSTR VSName, LPCSTR PSName);
+	bool Create(WCHAR* filename, LPCSTR VSName, LPCSTR PSName, bool UI_Material);
 	bool Create(WCHAR* filename, LPCSTR VSName, LPCSTR PSName, LPCSTR GSName);
 	bool Create(WCHAR* filename, LPCSTR VSName, LPCSTR PSName, LPCSTR GSName, LPCSTR HSName, LPCSTR DSName);
 
 	void Activate();
-};
-
-
-//----------------------------------------------
-//
-//	頂点データ構造体定義
-//
-//----------------------------------------------
-
-struct VERTEX
-{
-	DirectX::XMFLOAT3 Pos;	//位置
-	DirectX::XMFLOAT3 Normal;//法線
-	DirectX::XMFLOAT2 Tex;	//UV座標
-	DirectX::XMFLOAT4 Color;	//頂点色
 };

@@ -18,7 +18,7 @@ void Mesh_Renderer::Initialize(shared_ptr<GameObject> obj)
 	transform = obj->transform;
 	Render_Manager::Add(static_pointer_cast<Mesh_Renderer>(shared_from_this()));
 	// 定数バッファの生成
-	if(!ConstantBuffer)
+	if (!ConstantBuffer)
 	{
 		D3D11_BUFFER_DESC bd = {};
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -43,7 +43,7 @@ void Mesh_Renderer::Set_Mesh(std::shared_ptr<Mesh> Mesh_Data)
 		{
 			mesh_data->skin_meshes[i].subsets[j].diffuse.ID = Subset_ID;
 			string Mat_Name = mesh_data->name + "_" + mesh_data->skin_meshes[i].subsets[j].diffuse.TexName;
-			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_Mesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str());
+			shared_ptr<Material> Mat = Material::Create(Mat_Name, L"Code/Shader/Default_Mesh.fx", mesh_data->skin_meshes[i].subsets[j].diffuse.TexPass.c_str(), false);
 			material.emplace_back(Mat);
 			Subset_ID++;
 		}
