@@ -45,14 +45,16 @@ void Transform::Update()
 		XMStoreFloat4x4(&translation_matrix, T);
 		XMStoreFloat4x4(&world, S * R * T);
 
-		XMMATRIX RotateYTempMatrix;
-		RotateYTempMatrix = XMMatrixRotationY(XMConvertToRadians(eulerAngles.y));
-
 		XMVECTOR right_v = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), up_v = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), forward_v = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 
-		forward_v = XMVector3TransformCoord(XMLoadFloat4(&DefaultForward), RotateYTempMatrix);
-		right_v = XMVector3TransformCoord(XMLoadFloat4(&DefaultRight), RotateYTempMatrix);
-		up_v = XMVector3TransformCoord(up_v, RotateYTempMatrix);
+		forward_v = XMVector3Transform(forward_v, R);
+		forward_v = XMVector3Normalize(forward_v);
+
+		right_v = XMVector3Transform(right_v, R);
+		right_v = XMVector3Normalize(right_v);
+
+		up_v = XMVector3Transform(up_v, R);
+		up_v = XMVector3Normalize(up_v);
 
 		XMStoreFloat4(&forward, forward_v);
 		XMStoreFloat4(&right, right_v);

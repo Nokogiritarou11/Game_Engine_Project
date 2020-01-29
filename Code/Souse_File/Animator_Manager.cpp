@@ -4,14 +4,6 @@ using namespace std;
 
 list<weak_ptr<Animator>> Animator_Manager::Animator_list;
 
-Animator_Manager::Animator_Manager()
-{
-}
-
-Animator_Manager::~Animator_Manager()
-{
-}
-
 void Animator_Manager::Reset()
 {
 	Animator_list.clear();
@@ -19,12 +11,11 @@ void Animator_Manager::Reset()
 
 void Animator_Manager::Update()
 {
-	list<weak_ptr<Animator>>::iterator itr_end = Animator_list.end();
-	for (list<weak_ptr<Animator>>::iterator itr = Animator_list.begin(); itr != itr_end;)
+	for (list<weak_ptr<Animator>>::iterator itr = Animator_list.begin(); itr != Animator_list.end();)
 	{
 		if (itr->expired())
 		{
-			Animator_list.erase(itr);
+			itr = Animator_list.erase(itr);
 			continue;
 		}
 		shared_ptr<Animator> animator = itr->lock();

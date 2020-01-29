@@ -203,9 +203,9 @@ bool Shader::Create(WCHAR* filename, LPCSTR VSFunc, LPCSTR PSFunc, bool UI_Mater
 		{
 			return false;
 		}
-		pixel_cache.insert(make_pair(filename, PS.Get()));
 		// ピクセルシェーダ生成
 		hr = DxSystem::Device->CreatePixelShader(PSBlob->GetBufferPointer(), PSBlob->GetBufferSize(), NULL, PS.GetAddressOf());
+		pixel_cache.insert(make_pair(filename, PS.Get()));
 		//PSBlob->Release();
 		assert(SUCCEEDED(hr));
 	}

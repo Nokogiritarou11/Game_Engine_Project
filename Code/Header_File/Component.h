@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <list>
+#include <typeinfo> 
 #include <memory>
 #include "Object.h"
 
@@ -34,10 +35,16 @@ private:
 template<class T>
 std::shared_ptr<T> Component::GetComponent()
 {
-	for (std::shared_ptr<Component> com : gameObject->Component_List) {
-		std::shared_ptr<T> buff = std::static_pointer_cast<T>(com);
+	for (std::shared_ptr<Component> com : gameObject->Component_List)
+	{
+		std::shared_ptr<T> buff = std::dynamic_pointer_cast<T>(com);
 		if (buff != nullptr)
-			return buff;
+		{
+			if (typeid(shared_ptr<T>) == typeid(buff))
+			{
+				return buff;
+			}
+		}
 	}
 	return nullptr;
 }

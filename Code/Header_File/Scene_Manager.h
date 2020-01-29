@@ -9,10 +9,6 @@
 class Scene_Manager
 {
 public:
-
-	Scene_Manager();
-	~Scene_Manager();
-
 	static void CreateScene(std::shared_ptr<Scene> Scene_Class, std::string Scene_Name);
 	static void Set_StartScene(std::string Scene_Name);
 	static void LoadScene(std::string Scene_Name);

@@ -7,9 +7,6 @@
 class Camera_Manager
 {
 public:
-	Camera_Manager();
-	~Camera_Manager();
-
 	static void Reset();
 
 	static void Update();

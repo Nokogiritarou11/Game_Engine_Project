@@ -4,18 +4,6 @@
     <FxCompile Include="Code\Shader\2D.fx">
       <Filter>Sources\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Code\Shader\sprite_batch_ps.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\Shader\sprite_batch_vs.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\Shader\sprite_ps.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code\Shader\sprite_vs.hlsl">
-      <Filter>Sources\Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="Code\Shader\Default_Mesh.fx" />
     <FxCompile Include="Code\Shader\Default_SkinMesh.fx" />
   </ItemGroup>
@@ -68,6 +56,10 @@
       <Filter>Sources\Reaources</Filter>
     </ClCompile>
     <ClCompile Include="Code\Souse_File\Rect_Transform.cpp" />
+    <ClCompile Include="Code\Script\Souse\Enemy.cpp" />
+    <ClCompile Include="Code\Script\Souse\Player.cpp" />
+    <ClCompile Include="Code\Script\Souse\Game_Manager.cpp" />
+    <ClCompile Include="Code\Script\Souse\UI_Controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Header_File\Audio_Manager.h">
@@ -121,14 +113,11 @@
       <Filter>Sources\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Code\Header_File\RectTransform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Code\Shader\sprite.hlsli">
-      <Filter>Sources\Shaders</Filter>
-    </None>
-    <None Include="Code\Shader\sprite_batch.hlsli">
-      <Filter>Sources\Shaders</Filter>
-    </None>
+    <ClInclude Include="Code\Script\Header\Player.h" />
+    <ClInclude Include="Code\Script\Header\Enemy.h" />
+    <ClInclude Include="Code\Script\Header\All_Script.h" />
+    <ClInclude Include="Code\Script\Header\Game_Manager.h" />
+    <ClInclude Include="Code\Script\Header\UI_Controller.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sources">

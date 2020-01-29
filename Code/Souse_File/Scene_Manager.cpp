@@ -1,4 +1,9 @@
 #include "Scene_Manager.h"
+#include "Animator_Manager.h"
+#include "Camera_Manager.h"
+#include "GameObject_Manager.h"
+#include "MonoBehaviour_Manager.h"
+#include "Render_Manager.h"
 using namespace std;
 
 //**********************************************
@@ -12,14 +17,6 @@ std::weak_ptr<Scene> Scene_Manager::Active_Scene;
 std::list<Scene_Manager::Scene_Data> Scene_Manager::Scene_List;
 bool Scene_Manager::Load;
 std::string Scene_Manager::Next_Scene_Name;
-
-Scene_Manager::Scene_Manager()
-{
-}
-
-Scene_Manager::~Scene_Manager()
-{
-}
 
 void Scene_Manager::CreateScene(shared_ptr<Scene> Scene_Class, string Scene_Name)
 {
@@ -79,8 +76,13 @@ void Scene_Manager::Update()
 			if (itr->Name == Next_Scene_Name)
 			{
 				Active_Scene = itr->Scene_ptr;
-				Load = false;
 				itr->Scene_ptr->Initialize();
+				MonoBehaviour_Manager::Reset();
+				Animator_Manager::Reset();
+				GameObject_Manager::Reset();
+				Render_Manager::Reset();
+				Camera_Manager::Reset();
+				Load = false;
 				break;
 			}
 		}

@@ -35,19 +35,20 @@ void Camera::Update()
 		XMFLOAT4 eye = { transform->position.x,transform->position.y,transform->position.z ,0 };
 		XMVECTOR eye_v = XMLoadFloat4(&eye);
 
-		XMVECTOR focus_v = XMLoadFloat4(&transform->forward);
-		focus_v = XMVector3Normalize(focus_v);
+		XMVECTOR focus_v = eye_v + XMLoadFloat4(&transform->forward);
 
-		focus_v = eye_v + focus_v;
+		XMVECTOR camForward = XMVector3Normalize(focus_v - eye_v);    // Get forward vector based on target
+		camForward = XMVectorSetY(camForward, 0.0f);    // set forwards y component to 0 so it lays only on
+		camForward = XMVector3Normalize(camForward);
+		XMVECTOR camRight = XMVectorSet(-XMVectorGetZ(camForward), 0.0f, XMVectorGetX(camForward), 0.0f);
 
-		XMVECTOR up_v = XMLoadFloat4(&transform->up);
-
+		XMVECTOR up_v = XMVectorSet(0,1,0,0);
 		XMStoreFloat4(&focus, focus_v);
 		XMStoreFloat4x4(&V, XMMatrixLookAtLH(eye_v, focus_v, up_v));
 	}
 }
 
-XMFLOAT2 Camera::ToScreenPos(XMFLOAT3 pos)
+XMFLOAT2 Camera::WorldToViewportPoint(XMFLOAT3 pos)
 {
 	XMVECTOR p = XMLoadFloat3(&pos);
 	XMVECTOR screen

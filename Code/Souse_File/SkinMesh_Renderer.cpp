@@ -82,29 +82,31 @@ void SkinMesh_Renderer::Render(shared_ptr<Camera> Render_Camera)
 				XMLoadFloat4x4(&transform->coordinate_conversion) *
 				XMLoadFloat4x4(&transform->world));
 
-			int frame = 0;
-			frame = Animation_Time / mesh.skeletal_animation[Animation_Index].sampling_time;
-			if (frame > mesh.skeletal_animation[Animation_Index].size() - 1)
+			if (mesh.skeletal_animation.size() > 0 && mesh.skeletal_animation[Animation_Index].size() > 0)
 			{
-				if (!Animation_Loop)
+				int frame = 0;
+				frame = Animation_Time / mesh.skeletal_animation[Animation_Index].sampling_time;
+				if (frame > mesh.skeletal_animation[Animation_Index].size() - 1)
 				{
-					frame = 0;
+					if (!Animation_Loop)
+					{
+						frame = 0;
+					}
+					else
+					{
+						frame = mesh.skeletal_animation[Animation_Index].size() - 1;
+					}
+					Animation_Time = 0.0f;
 				}
-				else
+				Animation_Rate = (float)frame / mesh.skeletal_animation[Animation_Index].size();
+				vector<Mesh::bone> skeletal = mesh.skeletal_animation[Animation_Index].at(frame);
+				size_t number_of_bones = skeletal.size();
+				_ASSERT_EXPR(number_of_bones < MAX_BONES, L"'the number_of_bones' exceeds MAX_BONES.");
+				for (size_t i = 0; i < number_of_bones; i++)
 				{
-					frame = mesh.skeletal_animation[Animation_Index].size() - 1;
+					XMStoreFloat4x4(&data.bone_transforms[i], XMLoadFloat4x4(&skeletal.at(i).transform));
 				}
-				Animation_Time = 0.0f;
 			}
-			Animation_Rate = (float)frame / mesh.skeletal_animation[Animation_Index].size();
-			vector<Mesh::bone> skeletal = mesh.skeletal_animation[Animation_Index].at(frame);
-			size_t number_of_bones = skeletal.size();
-			_ASSERT_EXPR(number_of_bones < MAX_BONES, L"'the number_of_bones' exceeds MAX_BONES.");
-			for (size_t i = 0; i < number_of_bones; i++)
-			{
-				XMStoreFloat4x4(&data.bone_transforms[i], XMLoadFloat4x4(&skeletal.at(i).transform));
-			}
-
 			DxSystem::DeviceContext->UpdateSubresource(ConstantBuffer.Get(), 0, nullptr, &data, 0, 0);
 			DxSystem::DeviceContext->VSSetConstantBuffers(0, 1, ConstantBuffer.GetAddressOf());
 			DxSystem::DeviceContext->IASetInputLayout(material[subset.diffuse.ID]->shader->VertexLayout.Get());

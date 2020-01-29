@@ -50,7 +50,7 @@ HRESULT DxSystem::CreateDevice(HWND hWnd)
 	UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 #if defined(_DEBUG)
 	// デバッグレイヤーの設定
-	creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+	//creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 	//デバイスの生成
 	hr = D3D11CreateDevice(
@@ -71,6 +71,7 @@ HRESULT DxSystem::CreateDevice(HWND hWnd)
 
 
 #if defined(_DEBUG)
+	/*
 	//デバッグモード開始
 	if (DXGIDebug == nullptr)
 	{
@@ -86,6 +87,7 @@ HRESULT DxSystem::CreateDevice(HWND hWnd)
 	}
 	else
 		DXGIDebug->ReportLiveObjects(DXGI_DEBUG_D3D11, DXGI_DEBUG_RLO_DETAIL);
+		*/
 #endif
 
 	//インターフェース取得

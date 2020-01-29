@@ -22,7 +22,7 @@ public:
 
 	void Initialize(std::shared_ptr<GameObject> obj);
 	void Update();
-	DirectX::XMFLOAT2 ToScreenPos(DirectX::XMFLOAT3 pos);
+	DirectX::XMFLOAT2 WorldToViewportPoint(DirectX::XMFLOAT3 pos);
 private:
 
 	D3D11_VIEWPORT viewport;

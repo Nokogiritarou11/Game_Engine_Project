@@ -28,12 +28,11 @@ void GameObject_Manager::Desytroy(shared_ptr<GameObject> obj)
 
 void GameObject_Manager::Update()
 {
-	list<weak_ptr<GameObject>>::iterator itr_end = gameObject_List.end();
-	for (list<weak_ptr<GameObject>>::iterator itr = gameObject_List.begin(); itr != itr_end;)
+	for (list<weak_ptr<GameObject>>::iterator itr = gameObject_List.begin(); itr != gameObject_List.end();)
 	{
 		if (itr->expired())
 		{
-			gameObject_List.erase(itr);
+			itr = gameObject_List.erase(itr);
 			continue;
 		}
 

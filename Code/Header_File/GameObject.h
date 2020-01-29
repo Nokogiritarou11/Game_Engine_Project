@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <typeinfo> 
 #include <string>
 #include <list>
 #include <memory>
@@ -34,15 +35,24 @@ public:
 
 private:
 	bool Active = true;
+	bool Old_Active = true;
+
+	void Set_OnEnable_OnDisable(std::shared_ptr<Component> comp);
 };
 
 template<class T>
 std::shared_ptr<T> GameObject::GetComponent()
 {
-	for (std::shared_ptr<Component> com : Component_List) {
-		std::shared_ptr<T> buff = std::static_pointer_cast<T>(com);
+	for (std::shared_ptr<Component> com : Component_List)
+	{
+		std::shared_ptr<T> buff = std::dynamic_pointer_cast<T>(com);
 		if (buff != nullptr)
-			return buff;
+		{
+			if (typeid(shared_ptr<T>) == typeid(buff))
+			{
+				return buff;
+			}
+		}
 	}
 	return nullptr;
 }

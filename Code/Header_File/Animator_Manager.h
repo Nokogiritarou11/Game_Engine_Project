@@ -4,8 +4,6 @@
 class Animator_Manager
 {
 public:
-	Animator_Manager();
-	~Animator_Manager();
 
 	static void Reset();
 

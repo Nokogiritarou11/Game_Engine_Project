@@ -8,9 +8,8 @@
 class Render_Manager
 {
 public:
-	Render_Manager();
-	~Render_Manager();
 
+	static void Reset();
 	static void Add(std::shared_ptr<Mesh_Renderer> m_rend);
 	static void Add(std::shared_ptr<SkinMesh_Renderer> m_rend);
 	static void Add(std::shared_ptr<Sprite_Renderer> m_rend);
