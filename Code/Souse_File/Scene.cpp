@@ -43,47 +43,194 @@ void Scene::Update()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Test_Scene::Initialize()
+void Game_01_Scene::Initialize()
 {
+	Audio_Manager::BGM_title->Stop();
+
 	shared_ptr<GameObject> player = GameObject::Instantiate("player");
 	player->tag = "Player";
-	player->transform->eulerAngles = { -90,0,0 };
-	player->transform->scale = { 0.1f,0.1f ,0.1f };
 	player->AddComponent<Player>();
+	player->AddComponent<Pauser>();
 	shared_ptr<SkinMesh_Renderer> renderer = player->AddComponent<SkinMesh_Renderer>();
-	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
+	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "player_default.txt"));
 	shared_ptr<Animator> animator = player->AddComponent<Animator>();
 	animator->Set_Skin_Renderer(renderer);
 	animator->Animation_Loop = true;
 
 	shared_ptr<GameObject> Floor = GameObject::Instantiate("Floor");
 	shared_ptr<SkinMesh_Renderer> f_renderer = Floor->AddComponent<SkinMesh_Renderer>();
-	f_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\untitled_fbx\\", "untitled.txt"));
+	Floor->transform->eulerAngles = { -90,0,0 };
+	Floor->transform->scale = { 2,2,2 };
+	f_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\haikei\\", "haikei_yuka1.txt"));
+
+	shared_ptr<GameObject> G_Manager = GameObject::Instantiate("Game_Manager");
+	shared_ptr<Game_Manager> g_m =  G_Manager->AddComponent<Game_Manager>();
+	g_m->Stage_Number = 0;
+	G_Manager->AddComponent<UI_Controller>();
+
+	shared_ptr<GameObject> enemy = GameObject::Instantiate("enemy");
+	enemy->tag = "Enemy";
+	enemy->transform->position = { 35,0,0 };
+	enemy->transform->scale = { 0.2f,0.2f ,0.2f };
+	shared_ptr<Enemy> e = enemy->AddComponent<Enemy>();
+	e->Enemy_State = 0;
+	enemy->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> e_renderer = enemy->AddComponent<SkinMesh_Renderer>();
+	e_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
+	shared_ptr<Animator> e_animator = enemy->AddComponent<Animator>();
+	e_animator->Set_Skin_Renderer(e_renderer);
+	e_animator->Animation_Loop = true;
+
+	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
+	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
+	camera->transform->position = { 0,200,0.0f };
+	camera->transform->eulerAngles = { 90,0,0 };
+
+	Audio_Manager::BGM_play->SetVolume(0.25f);
+	Audio_Manager::BGM_play->Play(true);
+}
+
+void Game_02_Scene::Initialize()
+{
+	shared_ptr<GameObject> player = GameObject::Instantiate("player");
+	player->tag = "Player";
+	player->AddComponent<Player>();
+	player->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> renderer = player->AddComponent<SkinMesh_Renderer>();
+	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "player_default.txt"));
+	shared_ptr<Animator> animator = player->AddComponent<Animator>();
+	animator->Set_Skin_Renderer(renderer);
+	animator->Animation_Loop = true;
+
+	shared_ptr<GameObject> Floor = GameObject::Instantiate("Floor");
+	shared_ptr<SkinMesh_Renderer> f_renderer = Floor->AddComponent<SkinMesh_Renderer>();
+	Floor->transform->eulerAngles = { -90,0,0 };
+	Floor->transform->scale = { 2,2,2 };
+	f_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\haikei\\", "haikei_yuka1.txt"));
 
 	shared_ptr<GameObject> G_Manager = GameObject::Instantiate("Game_Manager");
 	G_Manager->AddComponent<Game_Manager>();
 	G_Manager->AddComponent<UI_Controller>();
 
 	shared_ptr<GameObject> enemy = GameObject::Instantiate("enemy");
-	enemy->transform->position = { 25,0,0 };
+	enemy->tag = "Enemy";
+	enemy->transform->position = { 40,0,0 };
 	enemy->transform->scale = { 0.2f,0.2f ,0.2f };
-	enemy->AddComponent<Enemy>();
+	shared_ptr<Enemy> e = enemy->AddComponent<Enemy>();
+	e->Enemy_State = 0;
+	enemy->AddComponent<Pauser>();
 	shared_ptr<SkinMesh_Renderer> e_renderer = enemy->AddComponent<SkinMesh_Renderer>();
-	e_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\danbo_fbx\\", "danbo_taiki.txt"));
+	e_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
 	shared_ptr<Animator> e_animator = enemy->AddComponent<Animator>();
 	e_animator->Set_Skin_Renderer(e_renderer);
 	e_animator->Animation_Loop = true;
 
-	/*
-	shared_ptr<GameObject> image = GameObject::Instantiate("image");
-	shared_ptr<Sprite_Renderer> s_renderer = image->AddComponent<Sprite_Renderer>();
-	s_renderer->Set_Texture("Test", L"Code/Shader/2D.fx", L"Image\\UI”Ä—pŽlŠp.png");
-	image->transform->position = {100,100,0};
-	s_renderer->material->color = { 1.0f,1.0f,1.0f,1.0f };
-	*/
+	shared_ptr<GameObject> enemy_02 = GameObject::Instantiate("enemy_02");
+	enemy_02->tag = "Enemy";
+	enemy_02->transform->position = { -40,0,0 };
+	enemy_02->transform->scale = { 0.2f,0.2f ,0.2f };
+	shared_ptr<Enemy> e_02 = enemy_02->AddComponent<Enemy>();
+	e_02->Enemy_State = 0;
+	enemy_02->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> e_renderer_02 = enemy_02->AddComponent<SkinMesh_Renderer>();
+	e_renderer_02->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
+	shared_ptr<Animator> e_animator_02 = enemy_02->AddComponent<Animator>();
+	e_animator_02->Set_Skin_Renderer(e_renderer_02);
+	e_animator_02->Animation_Loop = true;
 
 	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
 	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
-	camera->transform->position = { 0,150,-80.0f };
-	camera->transform->eulerAngles = { 60,0,0 };
+	camera->transform->position = { 0,200,0.0f };
+	camera->transform->eulerAngles = { 90,0,0 };
+}
+void Game_03_Scene::Initialize()
+{
+	shared_ptr<GameObject> player = GameObject::Instantiate("player");
+	player->tag = "Player";
+	player->AddComponent<Player>();
+	player->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> renderer = player->AddComponent<SkinMesh_Renderer>();
+	renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "player_default.txt"));
+	shared_ptr<Animator> animator = player->AddComponent<Animator>();
+	animator->Set_Skin_Renderer(renderer);
+	animator->Animation_Loop = true;
+
+	shared_ptr<GameObject> Floor = GameObject::Instantiate("Floor");
+	shared_ptr<SkinMesh_Renderer> f_renderer = Floor->AddComponent<SkinMesh_Renderer>();
+	Floor->transform->eulerAngles = { -90,0,0 };
+	Floor->transform->scale = { 2,2,2 };
+	f_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\haikei\\", "haikei_yuka1.txt"));
+
+	shared_ptr<GameObject> G_Manager = GameObject::Instantiate("Game_Manager");
+	G_Manager->AddComponent<Game_Manager>();
+	G_Manager->AddComponent<UI_Controller>();
+
+	shared_ptr<GameObject> enemy = GameObject::Instantiate("enemy");
+	enemy->tag = "Enemy";
+	enemy->transform->position = { -40,0,0 };
+	enemy->transform->scale = { 0.2f,0.2f ,0.2f };
+	shared_ptr<Enemy> e = enemy->AddComponent<Enemy>();
+	e->Enemy_State = 0;
+	enemy->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> e_renderer = enemy->AddComponent<SkinMesh_Renderer>();
+	e_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
+	shared_ptr<Animator> e_animator = enemy->AddComponent<Animator>();
+	e_animator->Set_Skin_Renderer(e_renderer);
+	e_animator->Animation_Loop = true;
+
+	shared_ptr<GameObject> enemy_02 = GameObject::Instantiate("enemy_02");
+	enemy_02->tag = "Enemy";
+	enemy_02->transform->position = { 40,0,0 };
+	enemy_02->transform->scale = { 0.2f,0.2f ,0.2f };
+	shared_ptr<Enemy> e_02 = enemy_02->AddComponent<Enemy>();
+	e_02->Enemy_State = 0;
+	enemy_02->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> e_renderer_02 = enemy_02->AddComponent<SkinMesh_Renderer>();
+	e_renderer_02->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
+	shared_ptr<Animator> e_animator_02 = enemy_02->AddComponent<Animator>();
+	e_animator_02->Set_Skin_Renderer(e_renderer_02);
+	e_animator_02->Animation_Loop = true;
+
+
+	shared_ptr<GameObject> enemy_03 = GameObject::Instantiate("enemy_03");
+	enemy_03->tag = "Enemy";
+	enemy_03->transform->position = { 0,0,35 };
+	enemy_03->transform->scale = { 0.2f,0.2f ,0.2f };
+	shared_ptr<Enemy> e_03 = enemy_03->AddComponent<Enemy>();
+	e_03->Enemy_State = 0;
+	enemy_03->AddComponent<Pauser>();
+	shared_ptr<SkinMesh_Renderer> e_renderer_03 = enemy_03->AddComponent<SkinMesh_Renderer>();
+	e_renderer_03->Set_Mesh(Mesh::Load_Mesh("Model\\main\\", "enemy_default.txt"));
+	shared_ptr<Animator> e_animator_03 = enemy_03->AddComponent<Animator>();
+	e_animator_03->Set_Skin_Renderer(e_renderer_03);
+	e_animator_03->Animation_Loop = true;
+
+	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
+	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
+	camera->transform->position = { 0,200,0.0f };
+	camera->transform->eulerAngles = { 90,0,0 };
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Title_Scene::Initialize()
+{
+	Audio_Manager::BGM_play->Stop();
+
+	shared_ptr<GameObject> camera = GameObject::Instantiate("Main_Camera");
+	shared_ptr<Camera> camera_Comp = camera->AddComponent<Camera>();
+	camera->transform->position = { 0,200,0.0f };
+	camera->transform->eulerAngles = { 90,0,0 };
+
+	shared_ptr<GameObject> player = GameObject::Instantiate("player");
+	player->AddComponent<Title>();
+
+	shared_ptr<GameObject> Floor = GameObject::Instantiate("Floor");
+	shared_ptr<SkinMesh_Renderer> f_renderer = Floor->AddComponent<SkinMesh_Renderer>();
+	Floor->transform->eulerAngles = { -90,0,0 };
+	Floor->transform->scale = { 2,2,2 };
+	f_renderer->Set_Mesh(Mesh::Load_Mesh("Model\\haikei\\", "haikei_yuka1.txt"));
+
+	Audio_Manager::BGM_title->SetVolume(0.25f);
+	Audio_Manager::BGM_title->Play(true);
 }

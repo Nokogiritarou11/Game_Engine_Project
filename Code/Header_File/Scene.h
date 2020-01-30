@@ -23,11 +23,40 @@ private:
 
 };
 
-class Test_Scene : public Scene
+/////////////////////////////////////////////////////////////////////////
+
+class Game_01_Scene : public Scene
 {
 public:
 	void Initialize();
 	
+private:
+
+};
+class Game_02_Scene : public Scene
+{
+public:
+	void Initialize();
+
+private:
+
+};
+class Game_03_Scene : public Scene
+{
+public:
+	void Initialize();
+
+private:
+
+};
+
+/////////////////////////////////////////////////////////////////////////
+
+class Title_Scene : public Scene
+{
+public:
+	void Initialize();
+
 private:
 
 };

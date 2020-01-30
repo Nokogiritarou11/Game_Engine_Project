@@ -18,6 +18,7 @@ public:
 	float Animation_Time = 0;
 	float Animation_Rate = 0;
 	bool Animation_Loop = false;
+	bool Animation_End = false;
 
 private:
 

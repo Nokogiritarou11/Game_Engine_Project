@@ -154,9 +154,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Code\Script\Souse\Attack_Decision.cpp" />
     <ClCompile Include="Code\Script\Souse\Enemy.cpp" />
     <ClCompile Include="Code\Script\Souse\Game_Manager.cpp" />
+    <ClCompile Include="Code\Script\Souse\Hit_Controller.cpp" />
+    <ClCompile Include="Code\Script\Souse\Kunai.cpp" />
+    <ClCompile Include="Code\Script\Souse\Pauser.cpp" />
     <ClCompile Include="Code\Script\Souse\Player.cpp" />
+    <ClCompile Include="Code\Script\Souse\Title.cpp" />
     <ClCompile Include="Code\Script\Souse\UI_Controller.cpp" />
     <ClCompile Include="Code\Souse_File\Animator.cpp" />
     <ClCompile Include="Code\Souse_File\Animator_Manager.cpp" />
@@ -240,9 +245,14 @@
     <ClInclude Include="Code\Header_File\Time.h" />
     <ClInclude Include="Code\Header_File\Transform.h" />
     <ClInclude Include="Code\Script\Header\All_Script.h" />
+    <ClInclude Include="Code\Script\Header\Attack_Decision.h" />
     <ClInclude Include="Code\Script\Header\Enemy.h" />
     <ClInclude Include="Code\Script\Header\Game_Manager.h" />
+    <ClInclude Include="Code\Script\Header\Hit_Controller.h" />
+    <ClInclude Include="Code\Script\Header\Kunai.h" />
+    <ClInclude Include="Code\Script\Header\Pauser.h" />
     <ClInclude Include="Code\Script\Header\Player.h" />
+    <ClInclude Include="Code\Script\Header\Title.h" />
     <ClInclude Include="Code\Script\Header\UI_Controller.h" />
   </ItemGroup>
   <ItemGroup>

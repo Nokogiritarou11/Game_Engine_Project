@@ -1,4 +1,7 @@
 #include "Game_Manager.h"
+#include "Scene_Manager.h"
+
+int Game_Manager::Stage_Number;
 
 void Game_Manager::Start()
 {
@@ -28,6 +31,39 @@ void Game_Manager::Update()
 		Locking = false;
 		Change_State = 0;
 	}
+
+	if (Game_Over)
+	{
+		timer += Time::deltaTime;
+		if (gameover_timer < timer)
+		{
+			Scene_Manager::LoadScene("Title_Scene");
+		}
+	}
+
+	if (Enemy_Count <= 0)
+	{
+		Game_Clear = true;
+		gameclear_timer -= Time::deltaTime;
+		if (gameclear_timer < 0)
+		{
+			if (Stage_Number == 2)
+			{
+				Scene_Manager::LoadScene("Title_Scene");
+			}
+			if (Stage_Number == 1)
+			{
+				Scene_Manager::LoadScene("Game_03_Scene");
+				Stage_Number++;
+			}
+			if (Stage_Number == 0)
+			{
+				Scene_Manager::LoadScene("Game_02_Scene");
+				Stage_Number++;
+			}
+		}
+	}
+
 }
 
 void Game_Manager::Targeting_Object()
@@ -71,7 +107,6 @@ void Game_Manager::Targeting_Object()
 	shared_ptr<Transform> trg = target.lock();
 	shared_ptr<Camera> cam = camera.lock();
 	target_pos = cam->WorldToViewportPoint(trg->position);
-
 	if (LockOn_Direction != 0 && LockOn_Direction != LockOn_Direction_Old)
 	{
 		if (0 < LockOn_able_List.size())
@@ -87,41 +122,48 @@ void Game_Manager::Targeting_Object()
 					continue;
 				}
 				shared_ptr<GameObject> obj = itr->lock();
-				targetScreenPoint = cam->WorldToViewportPoint(obj->transform->position);
-				float target_distance = Vector2::Distance(target_pos, Vector2(targetScreenPoint.x, targetScreenPoint.y));
-
-				if (target_distance < min_target_distance)
+				if (!obj->activeSelf())
 				{
-					switch (LockOn_Direction)
+					continue;
+				}
+				targetScreenPoint = cam->WorldToViewportPoint(obj->transform->position);
+				if (targetScreenPoint.x < DxSystem::GetScreenWidth() && targetScreenPoint.x > 0 && targetScreenPoint.y < DxSystem::GetScreenHeight() && targetScreenPoint.y > 0)
+				{
+					float target_distance = Vector2::Distance(target_pos, Vector2(targetScreenPoint.x, targetScreenPoint.y));
+
+					if (target_distance < min_target_distance)
 					{
-					case 1:
-						if (targetScreenPoint.y > target_pos.y)
+						switch (LockOn_Direction)
 						{
-							min_target_distance = target_distance;
-							target = obj->transform;
+						case 1:
+							if (targetScreenPoint.y > target_pos.y)
+							{
+								min_target_distance = target_distance;
+								target = obj->transform;
+							}
+							break;
+						case 2:
+							if (targetScreenPoint.y < target_pos.y)
+							{
+								min_target_distance = target_distance;
+								target = obj->transform;
+							}
+							break;
+						case 3:
+							if (targetScreenPoint.x > target_pos.x)
+							{
+								min_target_distance = target_distance;
+								target = obj->transform;
+							}
+							break;
+						case 4:
+							if (targetScreenPoint.x < target_pos.x)
+							{
+								min_target_distance = target_distance;
+								target = obj->transform;
+							}
+							break;
 						}
-						break;
-					case 2:
-						if (targetScreenPoint.y < target_pos.y)
-						{
-							min_target_distance = target_distance;
-							target = obj->transform;
-						}
-						break;
-					case 3:
-						if (targetScreenPoint.x > target_pos.x)
-						{
-							min_target_distance = target_distance;
-							target = obj->transform;
-						}
-						break;
-					case 4:
-						if (targetScreenPoint.x < target_pos.x)
-						{
-							min_target_distance = target_distance;
-							target = obj->transform;
-						}
-						break;
 					}
 				}
 			}

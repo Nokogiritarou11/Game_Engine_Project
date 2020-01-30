@@ -85,18 +85,26 @@ void SkinMesh_Renderer::Render(shared_ptr<Camera> Render_Camera)
 			if (mesh.skeletal_animation.size() > 0 && mesh.skeletal_animation[Animation_Index].size() > 0)
 			{
 				int frame = 0;
-				frame = Animation_Time / mesh.skeletal_animation[Animation_Index].sampling_time;
-				if (frame > mesh.skeletal_animation[Animation_Index].size() - 1)
+				if (!Animation_End)
 				{
-					if (!Animation_Loop)
+					frame = Animation_Time / mesh.skeletal_animation[Animation_Index].sampling_time;
+					if (frame > mesh.skeletal_animation[Animation_Index].size() - 1)
 					{
-						frame = 0;
+						if (!Animation_Loop)
+						{
+							frame = mesh.skeletal_animation[Animation_Index].size() - 1;
+							Animation_End = true;
+						}
+						else
+						{
+							frame = 0;
+						}
+						Animation_Time = 0.0f;
 					}
-					else
-					{
-						frame = mesh.skeletal_animation[Animation_Index].size() - 1;
-					}
-					Animation_Time = 0.0f;
+				}
+				else
+				{
+					frame = mesh.skeletal_animation[Animation_Index].size() - 1;
 				}
 				Animation_Rate = (float)frame / mesh.skeletal_animation[Animation_Index].size();
 				vector<Mesh::bone> skeletal = mesh.skeletal_animation[Animation_Index].at(frame);

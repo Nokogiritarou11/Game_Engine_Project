@@ -4,8 +4,12 @@ using namespace std;
 Engine::Engine()
 {
 	Input_Manager::Initialize();
-	Scene_Manager::CreateScene(make_shared<Test_Scene>(), "Test_Scene");
-	Scene_Manager::Set_StartScene("Test_Scene");
+	Audio_Manager::Initialize();
+	Scene_Manager::CreateScene(make_shared<Game_01_Scene>(), "Game_01_Scene");
+	Scene_Manager::CreateScene(make_shared<Game_02_Scene>(), "Game_02_Scene");
+	Scene_Manager::CreateScene(make_shared<Game_03_Scene>(), "Game_03_Scene");
+	Scene_Manager::CreateScene(make_shared<Title_Scene>(), "Title_Scene");
+	Scene_Manager::Set_StartScene("Title_Scene");
 }
 
 Engine::~Engine()

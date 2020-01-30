@@ -86,7 +86,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	hWnd = CreateWindow(szWindowClass,
 		szWindowClass,
 		WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-		0, 0, 1280, 720,
+		0, 0, 1980, 1080,
 		NULL,
 		NULL,
 		hInstance,
@@ -101,6 +101,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	}
 
 	Engine* engine = new Engine();
+	Time::timeScale = 1.0f;
 
 	//ÉÅÉCÉìÉãÅ[Év
 	MSG hMsg = { 0 };
@@ -117,7 +118,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 		else
 		{
 			Time::deltaTime =
-				(GetTickCount64() - before) * 0.001f;
+				(GetTickCount64() - before) * 0.001f * Time::timeScale;
 
 			before = GetTickCount64();
 			float mspf = 1000.0f / fps;

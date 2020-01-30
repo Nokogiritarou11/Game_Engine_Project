@@ -78,6 +78,7 @@ void MonoBehaviour_Manager::Update()
 				if (mono->enabled)
 				{
 					mono->Start();
+					mono->Start_Flag = true;
 					itr = MonoBehaviour_Start_list.erase(itr);
 					continue;
 				}
@@ -98,6 +99,12 @@ void MonoBehaviour_Manager::Update()
 		{
 			if (mono->enabled)
 			{
+				if (!mono->Start_Flag)
+				{
+					mono->Awake();
+					mono->Start();
+					mono->Start_Flag = true;
+				}
 				mono->Update();
 			}
 		}

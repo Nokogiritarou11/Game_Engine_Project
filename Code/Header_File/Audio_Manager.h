@@ -11,28 +11,21 @@ using namespace std;
 class Audio_Manager
 {
 public:
-	unique_ptr <AudioEngine> m_audEngine;
+	static unique_ptr <AudioEngine> m_audEngine;
 
-	unique_ptr <SoundEffect> BGM_play_eff;
-	unique_ptr <SoundEffect> BGM_play_boss_eff;
-	unique_ptr <SoundEffect> BGM_title_eff;
-	unique_ptr <SoundEffectInstance> BGM_play;
-	unique_ptr <SoundEffectInstance> BGM_play_boss;
-	unique_ptr <SoundEffectInstance> BGM_title;
+	static unique_ptr <SoundEffect> BGM_play_eff;
+	static unique_ptr <SoundEffect> BGM_title_eff;
+	static unique_ptr <SoundEffectInstance> BGM_play;
+	static unique_ptr <SoundEffectInstance> BGM_title;
 
-	unique_ptr <SoundEffect> title;
-	unique_ptr <SoundEffect> slash;
-	unique_ptr <SoundEffect> attack;
-	unique_ptr <SoundEffect> hit;
-	unique_ptr <SoundEffect> repel[2];
-	unique_ptr <SoundEffect> guard;
-	unique_ptr <SoundEffect> guard_set;
-	unique_ptr <SoundEffect> death;
+	static unique_ptr <SoundEffect> title;
+	static unique_ptr <SoundEffect> attack;
+	static unique_ptr <SoundEffect> hit;
+	static unique_ptr <SoundEffect> death;
 
 	float volume = 0;
 
-	Audio_Manager();
-	~Audio_Manager();
+	static void Initialize();
 
 private:
 

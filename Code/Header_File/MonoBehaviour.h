@@ -9,7 +9,7 @@
 class MonoBehaviour : public Behavior
 {
 public:
-	std::list<std::shared_ptr<MonoBehaviour>>::iterator it;
+	bool Start_Flag = false;
 
 	MonoBehaviour();
 	~MonoBehaviour();

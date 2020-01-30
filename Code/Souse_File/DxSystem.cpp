@@ -20,8 +20,8 @@ ComPtr<ID3D11BlendState>			DxSystem::BlendState[BLEND_TYPE];
 
 ComPtr<IDXGIDebug>                  DxSystem::DXGIDebug;
 
-int DxSystem::ScreenWidth = 1280;
-int DxSystem::ScreenHeight = 720;
+int DxSystem::ScreenWidth = 1980;
+int DxSystem::ScreenHeight = 1080;
 XMFLOAT4 DxSystem::Light_Direction = { 0.0f, 1.0f, 0.0f, 0 };
 float DxSystem::elapsed_time = 0;
 
@@ -556,7 +556,7 @@ void DxSystem::Clear(DWORD color)
 
 	float clearColor[4];
 	for (int i = 3; i >= 0; i--) {
-		clearColor[i] = ((color >> 8 * (3 - i)) & 0x000000FF) / 255.0f;
+		clearColor[i] = ((color >> 8 * (3 - i)) & 0x00000000) / 255.0f;
 	}
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), clearColor);
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);

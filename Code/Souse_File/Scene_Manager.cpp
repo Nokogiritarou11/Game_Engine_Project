@@ -75,13 +75,13 @@ void Scene_Manager::Update()
 		{
 			if (itr->Name == Next_Scene_Name)
 			{
-				Active_Scene = itr->Scene_ptr;
-				itr->Scene_ptr->Initialize();
 				MonoBehaviour_Manager::Reset();
 				Animator_Manager::Reset();
 				GameObject_Manager::Reset();
 				Render_Manager::Reset();
 				Camera_Manager::Reset();
+				Active_Scene = itr->Scene_ptr;
+				itr->Scene_ptr->Initialize();
 				Load = false;
 				break;
 			}
